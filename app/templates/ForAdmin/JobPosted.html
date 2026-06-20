@@ -1,0 +1,153 @@
+{% extends "ForAdmin/Admin.html" %}
+{% block 'title' %}  JobPosted {% endblock  %}
+{% block 'style' %}  
+    <style>
+         *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            width:100%;
+            height:100%;
+            background: rgb(0, 160, 35);
+          
+            transition: 0.3s;
+
+        }
+        .heading {
+        background-color:cornflowerblue;
+        color:white;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        margin-top: 2rem;
+        height: 3.4rem;
+
+        }
+        .heading1 {
+             justify-content: center;
+        text-align: center;
+        align-items: center;
+            display: flex;
+        margin-left: 5rem;
+        margin-top: 2rem;
+        color: steelblue;
+        font-size: 3rem;
+      
+        }
+        table {
+           padding:10px;
+            margin:14px 20px;
+            color:white;
+            /* background-color: aliceblue; */
+            /* border: 2px solid black; */
+            width:95%;
+            background-color: aliceblue;
+              box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+            10px 10px 70px rgba(0,0,0,0.25),
+            inset 5px 5px 10px rgba(0,0,0,0.5),
+            inset 5px 5px 20px rgba(255,255,255,0.2),
+            inset -5px -5px 15px rgba(0, 0, 0, 0.75); 
+          
+        }
+        th{
+            /* border:1px solid black; */
+            width: 100px;
+            padding:10px;
+            align-items: center;
+            padding:10px;
+        }
+        td{
+            /* background-color: white; */
+            align-items: center;
+            /* border: 2px solid black; */
+            justify-content: space-around;
+            padding:8px;
+            color: black;
+            font-size: 1rem;
+        
+          
+        }
+        tr{
+            margin:5px;
+            /* background-color: dodgerblue; */
+            font-size: 1rem;
+        }
+        colgroup {
+            color:white;
+        }
+        
+    </style>
+   {% endblock  %}
+
+   {% block 'content' %} 
+    
+     <h1 class="heading1"> Job Posted</h1>
+    <table >
+        <colgroup>
+            <col style="background-color: rgb(67, 50, 223); color:white;">
+            <col style="background-color: blueviolet;">
+            <col style="background-color: rgb(90, 223, 167);">
+            <col style="background-color: rgb(197, 238, 101);">
+            <col style="background-color: rgb(3, 110, 110);">
+            <col style="background-color: rgb(22, 150, 236);">
+            <col style="background-color: rgb(130, 193, 235);">
+            <col style="background-color: rgb(7, 216, 25);">
+            <col style="background-color: rgb(218, 141, 141);">
+            <col style="background-color: rgb(39, 69, 238);">
+            <col style="background-color: rgb(128, 63, 63);">
+            <col style="background-color: rgb(7, 141, 146);">
+            <col style="background-color: rgb(11, 241, 107);">
+            <col style="background-color: rgb(255, 173, 19);">
+        </colgroup>
+        
+         <thead>
+        <tr align="center">
+            <th  class="col">#</th>
+            <th  class="col">Company Name</th>
+            <th  class="col">Employer Name</th>
+            <th  class="col">Phone Number</th>
+            <th  class="col">Email</th>
+            <th  class="col">Job Title</th>
+            <th class="col">Job Location</th>
+            <th class="col">Job Description</th>
+            <th class="col">Skills Required</th>
+            <th class="col">Posting Date</th>
+            <th class="col">Salary</th>
+            <th class="col">Insustry</th>
+            <th class="col">Education</th>
+            <th class="col">Experience Required</th>
+            <th class="col">Gender</th>
+           
+        </tr>
+        </thead>
+        <tbody>
+       
+          {% for job in jobs %}
+
+                <tr align="center">
+                   <th > {{ job.id }} </th>
+                   <th > {{ job.company_name }} </th>
+                    <td>{{ job.name }}</td>
+                    <td>{{ job.mobile_no }}</td>
+                    <td>{{ job.email }}</td>
+                    <td>{{ job.job_title }}</td>
+                    <td>{{ job.job_location }}</td>
+                    <td>{{ job.job_description }}</td>
+                    <td>{{ job.skills_required }}</td>
+                    <td>{{ job.posting_date }}</td>
+                    <td>{{ job.salary }}</td>
+                    <td>{{ job.industry }}</td>
+                    <td>{{ job.education }}</td>
+                    <td>{{ job.experience_required }}</td>
+                    <td>{{ job.gender }}</td>
+                  
+                </tr> 
+            {% endfor %} 
+        </tbody>
+    </table>
+{% endblock  %} 

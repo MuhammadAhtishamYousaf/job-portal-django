@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+{% load static %}
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="./main.css"> {% endcomment %}
+                            <!-- fonts -->
+             <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+            <link href="https://fonts.googleapis.com/css2?family=Nunito:ital@1&family=Satisfy&display=swap" rel="stylesheet">
+               <!-- Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+          <!-- <link rel="stylesheet" href="./main.css"> -->
+          <!-- swiper -->
+          {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"> {% endcomment %}
+
+
+    {% block 'title' %}  Business Page {% endblock  %}
+    {% block 'style' %}
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    {% endblock  %}
+
+    {% block 'content' %}
+
+{% comment %} </head>
+<body>
+     {% endcomment %}
+  <!-- navbar -->
+    <!-- <nav class="navbar">
+        <h1 class="logo"><a href="#">   Ahtisham   </a></h1>
+        <!-- <h1 class="logo">Suffah</h1>
+        <div class="menu">
+            <ul  onclick=" hideSidebar()"><svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30">
+                <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>  </ul>
+                                        <a href="#" > Jobs</a>
+                                        <a href="#" > Companies</a>
+                                        <a href="#" > About Us</a>
+                                        <a href="#" > Contact Us</a>
+                                        <a href="#" > Sign In</a>
+      </div>
+                   <div class="showSidebar" onclick="showSidebar()">
+                        <!-- <i class="fa-solid fa-bars"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28">
+                       <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                  </div>
+                        <div class="menu-taggle">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                     </div>
+    </nav>
+
+
+        <nav class="navbar">
+            <div class="container">
+            <div> <h1 class="logo">ALLAH</h1>  </div>
+            <ul >
+
+                <li> <a href="{% url 'job_posting' %}" target="_blank" > Job Posting </a> </li>
+                <li>  Jobs
+                    <ul class="drop-down">
+                        <li> <a href="#" target="_blank" > All Jobs </a> </li>
+                        <li> <a href="#" target="_blank" > Jobs by City </a> </li>
+                        <li> <a href="#" target="_blank" > Jobs by Country </a> </li>
+                        <li> <a href="#" target="_blank" > Jobs by Industry </a> </li>
+                    </ul>
+                </li>
+                <li> <a href="{% url 'contact_us' %}" target="_blank" > Contact Us </a> </li>
+                <li> <a href="{% url 'about_us' %}" target="_blank" > About Us  </a> </li>
+                <li>  Register
+                    <ul class="drop-down">
+                        <li> <a href="{% url 'employer_registration' %}" target="_blank" > Employer </a> </li>
+                        <li> <a href="{% url 'candidate_registration' %}" target="_blank" > Candidate </a> </li>
+                    </ul>
+                </li>
+                 <li>  Login
+                    <ul class="drop-down">
+                        <li> <a href="{% url 'employer_login' %}" target="_blank" > Employer </a> </li>
+                        <li> <a href="{% url 'candidate_login' %}" target="_blank" > Candidate </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>  -->
+             <!-- header -->
+  
+<section class="" id="home">
+        <header id="header">
+            {% include "_messages.html" %}
+        <h2 class="header-title">
+            FIND YOUR <br> <span> PERFECT JOB</span><br> EASILY
+        </h2>
+        </header>
+        <!-- Search -->
+        <div class="search-wrapper">
+          <form class="search-box" method="get" action="/search">
+            <!-- <div class="search-card"> -->
+                <input type="search" id='search' name='query' autocomplete="off" class="search-input" placeholder="Find your dream job">
+                <button class="search-button">Search</button>
+            <!-- </div> -->
+        </form>
+        <div class="result-box">
+            
+        </div>
+        </div>
+       
+        <!-- Filter box -->
+        <div class="filter-box">
+            <div class="filter-dropdown">
+                    <select name="job-level1"  id="job-level"  class="filter-select">
+                        {% comment %} <option value="">All</option> {% endcomment %}
+                        <option value="">Job Level</option>
+                        <option value="">Entry</option>
+                        <option value="">Mid-Senior</option>
+                        <option value="">Director</option>
+                    </select>
+                    <select name="job-function" id="job-function" class="filter-select">
+                            {% comment %} <option value="">All</option> {% endcomment %}
+                        <option value="">Job Function</option>
+                        <option value="">IT</option>
+                        <option value="">Management</option>
+                        <option value="">Education</option>
+                    </select>
+                    <select name="employment" id="employment" class="filter-select">
+                            {% comment %} <option value="">All</option> {% endcomment %}
+                        <option value="">EmployMent Type</option>
+                        <option value="">InternShip</option>
+                        <option value="">Part Time</option>
+                        <option value="">Full Time</option>
+                    </select>
+                    <select name="location" id="location" class="filter-select">
+                            {% comment %} <option value="">All</option> {% endcomment %}
+                        <option value="">Location</option>
+                        <option value="">Remote</option>
+                        <option value="">Pakistan</option>
+                        <option value="">Other</option>
+                    </select>
+                    <select name="education" id="education" class="filter-select">
+                            {% comment %} <option value="">All</option> {% endcomment %}
+                        <option value="">Education</option>
+                        <option value="">UnderGraduate</option>
+                        <option value="">Graduate</option>
+                        <option value="">Master's</option>
+                    </select>
+            </div>
+            <div class="filter-chosen">
+                 {% comment %} <div class="chosen-card">
+                    Remote <i class="fas fa-times-circle"></i>
+                 </div> {% endcomment %}
+                <!-- <div class="chosen-card"> -->
+                    <!-- Full time <i class="fas fa-times-circle"></i> -->
+                <!-- </div> -->
+                <!-- <div class="chosen-card"> -->
+                    <!-- Financial Tech <i class="fas fa-times-circle"></i> -->
+                <!-- </div> -->
+                <!-- <div class="chosen-card"> -->
+                    <!-- Entry Level  <i class="fas fa-times-circle"></i> -->
+                <!-- </div> -->
+            </div>
+        </div>
+    </section>
+        <!-- job listing -->
+        <section class="job-list ani" id="jobs">
+            {% for jobs in jobs %}
+        <div class="job-card">
+            <div class="job-name">
+                <img class="job-profile" src="https://www.designevo.com/res/templates/thumb_small/white-and-yellow-crown.webp" alt="">
+                <div class="job-detail">
+                    <p> {{jobs.job_title}} </p>
+                    <p> {{jobs.job_location}} </p>
+                    <p> {{jobs.job_description}} </p>
+                </div>
+            </div>
+            <div class="job-label">
+                <a href="#" class="label-a"><strong>Salary:</strong>{{jobs.salary}}</a>
+                <a href="#" class="label-b"> <strong>Industry:</strong>{{jobs.industry}}</a>
+                <a href="#" class="label-c"><strong>Experience:</strong>{{jobs.experience_required}}</a>
+            </div>
+            <div class="job-posted">
+                {{jobs.posting_date}}
+            </div>
+        </div><br>
+        {% endfor %}
+        
+        
+    
+      
+            </div>
+            <a href="{% url 'full_job_profile'%}"><button class="job-more">More Lists</button></a>
+
+        </section>
+    <!-- join -->
+    <section class="join" id="join">
+    <div class="join-detail">
+        <h1 class="section-title">LETS <br> <span> START </span> YOUR <br> NEW JOB WITH US</h1>
+        <p>A job title is a name or designation given to a job or position.
+            The title may describe the occupation, position, or job function of the person 
+            holding the job
+            or it may be a marketing term used to describe the product or service.
+        </p>
+    </div>
+    <a href="{% url 'full_job_profile'%}"><button class="join-button">Join Now</button></a>
+    </section>
+    <!-- featured company -->
+    <section class="featured ani" id="companies">
+    <h1 class="section-title">Featured Companies</h1>
+    <p>The title may describe the occupation, position
+    or job function of the person holding the job. </p>
+    <div class="featured-wrapper">
+    <!-- 01 -->
+            <div class="featured-card">
+                <img class="featured-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAA4VBMVEUADTn///8ADTgAACgAACwAACIAADIAACYAAC7//v8AADAAADQAACQAACX///2SmaIAAB0AAAAAAB+Dip9HS2EABjcACjR7hJcAABcAABHT1+QAAAv09vkiLkqwtr/i5elRXIFIUXB7gZlCSGVOVW8ADCscIzoQGTJ6gaBBSGPR1eA5QFtESVikqbO7v8pzdIOqscUcJ0mVnLfi5vQ1OlAVHz+Hi5kLEjTS1t3Fydjq7/d2eo1iZ3XHyc9aXnQgJUJRVWUoMEVrbn17f4gwNleIjJTGy8wVHECzt7qXnaVWXXlKl2KDAAAEiUlEQVR4nO3YbXeiRhQHcGYYHgRUQsWHhEh3k7ZbXUlMs0p0ja5JNen3/0Cde0HT9Jxuz9YXls3/9yKAkHP8X4aZi4YBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcBApj/0N4P8BAwGAYVLUBfB8u9KFkPLbvr182Ylj2to/vnt/cWlXsQb0laXnBIHT3n3iOU7dCdxYn+NAtuloLu0qM7BMutCtB5pqqyD46edfTCew/YvzDx9+9Y8U41DS7ZwOBoNh8f3d7sdRNrjrX4UUVko/XDazu2zU6nnSudbX3Y11WW7pPwY3Zw93idB+698G408XF+MjR/lP+EabTcrR4hqEq1SUJj09yN1pvzxMW1b3VG+Tc9vo8UXJbS5EQzRqdNCxDNuu4IPwUoNGg2ogZTQXtN/QhLiLDPd2plPW6DMh5ienejc594OJELWG+Lwoy9Oo6fMru8pdEo+DWktnUPdl/CLWdbic0Z3mnHrzecA1ULdUAdFf8YlZtuCzWb3KNVC7Gkhrxoln+Wlxg1s6nh7pabaoUS3SVP9JxlFOmWc0fIRY1C2Li5HG30ENfEPNKVVyNVXexwHlTGs0KprKMr/wDEBPfrKd8H2/7/Vpc+UYsjtaLEbz6hbAKGtA80GY0c7aornQTfkp0CmfQ33sLctHXySrhDYjKxjRtt+NTM91Ir14VrkIu3VBniU6dW7yh85ktx5MacGQYZb3H/hZSHmEqFg90OQh0uvOatmrx/H3UAM7Nmk7CrjhtR/LGvRDviiWytLrAs+XtIq4RmzkxVSp65RPlurIKQ6zXxc+cVug+PVH+mUNmvXiKv1A9E7LZkAsTqihXD4lu2ZCzO7d46Y4zP5ZiMpxwP1hMQ5qu3EgPSsqxwHd/KGnh74ftH7PZ0nxyWwZHzfGQfZ94lmiM+aKssj6pJwD0ykfh9ebm3taHGg+0KPfjG0ztFwVGpcPOV94VeWnoVjoW6bdzWjnKtID323PdutCM6J14mVduOfhMYqGN/1NOnGkrU64YWiaxw5ygGI+WD8OH7kYYu4Z/pBjpTz0J6blbNOih6b+oMm1uFzzbBj5RnxGnaK+7NhBDkA1qJUdMScPDNXhvLpPpM/Tpw2fTYo+sc79UrrlPiHb1oMOj5dVlSdFqkGDB37xcpBZ0htSqn441jlrtaI6/L5A742KT4rRUzFDpgmXIN0eO8chijlRFGl1rKZjxFN9mAexGiZiVwHxntcF/d5ocdHEfLY/pf+slVHhhcF8Fq886DReKppdnUlts12/eLn7/cCPo+L3g9b+twaRrKs8G+iW8PKHV4axNNrv2k5xsv74vMk3/T8iz4iu8zxfjOO2N0z1Xn4TrrM8TWbppmPTwljhZlna5ivU/hj2fmD7jqOUxceeUp5HSW1XKVfPgcpR7enUM6s9CF6jN4Wv3035amMY7XIWqPAY+CZ/y8n94xvJ/g8x30j6v/hKYvlvFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvB1/Aqh1WLP+Gk20AAAAAElFTkSuQmCC" alt="">
+                <h3>LOOKS</h3>
+                <button class="featured-button">View 2 jobs</button>
+            </div>
+            <!-- 02 -->
+            <div class="featured-card">
+                <img class="featured-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO8AAADTCAMAAABeFrRdAAAAw1BMVEX///8qAHz/WQD/TwDQyeENAHQlAH1JFHT9WgD/UgD/VQD/n3gVAHYjAHn/2Mqzq8z/wKtfS5nBuNb/eDr/9/Lm4fD/7OH/fUL08vmIeLOhlcJCJopIK47Z0+cVAHUAAG//ayX/SAD/hVPr6PK7rsn/yrY9AGz/ciybjr+wo8zg3OvW0OX8+/69tNRmUp08G4hsWqBROZL/0sI9FYp5Z6n/tZj/rYz/kWRTO5OOgbT/gEo2FoP/4tXJwdtLMY7/lmv/ZBj4P65fAAADOElEQVR4nO3YbVeiQBjGcUxhhWCtlNbY8iF3Kx96oMxsN63v/6mWuQcDXLU6x5TT+f9eFAzzYq4G5p7JMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAdCoZJ6v6So9fe2m/NzXOdSk1G26iebGqr6m6ntnFlPNNjXNdSmYhxQ1W9XWjHta38k7CqW5qnOtC3uW+UN53fb+pvI7+fNutzYxyfXRet+tr9VV9k7xO9TC2qXGuS5z34D19U3l/fPa4PsuivPVeqd8ZpBoGfk9N/BfKG/RLSj9qubyyzMj1kR93mdxEDW54mXmfv2fVdFd9c1vbVpq3xeuVJ8uVeWd0QtOLW6yu9BjqBs88sv5fr6r3bbloScSR3LQftppotUw98qYdy5OsElFW66vG69PConq0W1QXttpo7cllMc9x5/Puq1CNcfAoud2SEZh6sk39J1hQf0914FPjNkmeX9n9hsyhbDoG4+jSG9d13J+VUuV68fwaxh9bBy47qqWV44/XmPt+XbkM5UFP3Xg38nofq9W5c5fK66TOC7WWI03yo5zzihyvz5VBPXKiVqTC3+mxknyzcbUKMvWopqkHhzKzEtd+2mqat2Xqb9/VIUXyklsd/dRcVn+fduLA9u3GA3xQJu/s5U7owLqrvzRvvFTt2PcbHv3HLZjfcD+h51fvqk+W5q1V9fzm/uudy+tbhbkzYSgL9kSuK0v3k6f27PvN+eo8v3+eqiJ0LVvnev8kMpT1eapa6j+9dD1yFFvOv8/F1/XZzvuBOJu3a0oRitYn/7gZbaJd/dibHvQOwmX1d6TjvjjxviPX5s5HMoeeFYayvzIDY+jOyvOy/dVevL+q6X1H8Xmred4yl9e39OFAfjZuZm/xiv3zbXu2i6ydywy3R1sN9IZSU5Wd5uv517+Lz0fRgehGNXTu4gODeWG5nueeOXaiWH0qFtXvF7VOHZbVtd3Oc1XqDY8iw37SEhxHhwPXtMZ6VTYGj5bcdw3p+ribNop/6zp0+Cw3D7mvShmD3kG3MvGThvokCC5X/mcLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8Kf8A3eM/n5BtizsAAAAASUVORK5CYII=" alt="">
+                    <h3>FeeEx</h3>
+                <button class="featured-button">View 2 jobs</button>
+                    <!-- 03 -->
+        </div>
+        <div class="featured-card">
+            <img class="featured-image" src="data:image/png;base64,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" alt="">
+            <h3>CORPORATE</h3>
+            <button class="featured-button">View 2 jobs</button>
+                    <!-- 04 -->
+        </div>
+        <div class="featured-card">
+            <img class="featured-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPNcdZgGo2wQTw2E9dFylfuwOsc5s_CiH_PA&usqp=CAU" alt="">
+            <h3>COMPANY</h3>
+            <button class="featured-button">View 2 jobs</button>
+                    <!-- 05 -->
+        </div>
+        <div class="featured-card">
+            <img class="featured-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNAd9jLGUjBpfvEt8OSQe7dOP6L4ZRoqyLmQ&usqp=CAU" alt="">
+            <h3>XEMPHIS</h3>
+            <button class="featured-button">View 2 jobs</button>
+                    <!-- 06 -->
+        </div>
+        <div class="featured-card">
+            <img class="featured-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRylkMpriHWtg7NyO-jw-PAkQ_UkTch9OLPWhVhKew0rrDBfmPE" alt="">
+            <h3>AHTISHAM</h3>
+            <button class="featured-button">View 2 jobs</button>
+        </div>
+    </div>
+
+  </section>
+  <!-- <div class="curve">curve</div> -->
+
+<!-- swiper  -->
+ <section id="testimonial">
+<div class="slide-container swiper mySwiper">
+    <div class="slide-content swiper-wrapper">
+        <div class="card swiper-slide">
+            <div class="image-content">
+                <span class="overlay"></span>
+                <div class="card-image">
+                    <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">  
+                </div>
+            </div>
+            <div class="card-content">
+              <h2 class="name">Ahtisham</h2>
+              <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+            </div>
+        </div>
+
+        <div class="card swiper-slide">
+          <div class="image-content">
+              <span class="overlay"></span>
+              <div class="card-image">
+                <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+              </div>
+          </div>
+          <div class="card-content">
+            <h2 class="name">Ahtisham Yousaf</h2>
+            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+          </div>
+      </div>
+
+      <div class="card swiper-slide">
+        <div class="image-content">
+            <span class="overlay"></span>
+            <div class="card-image">
+                <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+            </div>
+        </div>
+        <div class="card-content">
+          <h2 class="name">Ahtisham Yousaf</h2>
+          <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+        </div>
+    </div>
+
+    <div class="card swiper-slide">
+      <div class="image-content">
+          <span class="overlay"></span>
+          <div class="card-image">
+            <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+          </div>
+      </div>
+      <div class="card-content">
+        <h2 class="name">Ahtisham Yousaf</h2>
+        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+      </div>
+  </div>
+
+  <div class="card swiper-slide">
+    <div class="image-content">
+        <span class="overlay"></span>
+        <div class="card-image">
+            <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+        </div>
+    </div>
+    <div class="card-content">
+      <h2 class="name">Ahtisham Yousaf</h2>
+      <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+    </div>
+</div>
+
+<div class="card swiper-slide">
+  <div class="image-content">
+      <span class="overlay"></span>
+      <div class="card-image">
+        <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+      </div>
+  </div>
+  <div class="card-content">
+    <h2 class="name">Ahtisham Yousaf</h2>
+    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+  </div>
+</div>
+
+<div class="card swiper-slide">
+<div class="image-content">
+    <span class="overlay"></span>
+    <div class="card-image">
+        <img src="{% static 'images/ahtisham_collage.webp' %}" alt="Ahtisham">
+    </div>
+</div>
+<div class="card-content">
+  <h2 class="name">Ahtisham Yousaf</h2>
+  <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    Corrupti reprehenderit, culpa dolores eaque totam odio.</p>
+</div>
+</div>
+        <!-- Repeat other card elements similarly -->
+    </div>
+    <!-- Navigation buttons -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+
+  </div>
+</section>
+<!-- blog -->
+<section class="blog ani" id="blogs">
+    <h1 class="section-title">Career Advices</h1>
+     <p>Learn more career tips company's recruiter</p>
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://www.gulfjobs.com/uploads/blogs/finding-a-job-in-dubai-uae-metro_730.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>Things you should identify when searching for a job in UAE</h3>
+                <p>It is feasible to obtain employment in the United Arab Emira...</p>
+                <a href="{% url 'things_you_should_know' %}"> <button class="blog-more">Read </button></a>
+            </div>
+        </div>
+     </div>
+     <!-- 02 -->
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://www.gulfjobs.com/uploads/blogs/getty_186693264_200011642000928062_327104_532.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>Most asked questions during an interview</h3>
+                <p>Are you prepared to perform admirably in your forthcoming jo...</p>
+                <a href="{% url 'most_asked' %}"> <button class="blog-more">Read </button></a>
+
+
+            </div>
+        </div>
+     </div>
+     <!-- 03 -->
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://www.gulfjobs.com/uploads/blogs/_197898_bloghero_146.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>How to stay confident during an interview</h3>
+                <p>A job title is a name or designation given...</p>
+                <a href="{% url 'stay_confident' %}"> <button class="blog-more">Read </button></a>
+
+            </div>
+        </div>
+     </div>
+     <!-- 03 -->
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://www.gulfjobs.com/uploads/blogs/getty_494741050_325316_434.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>
+                    Writing professional emails 101</h3>
+                <p>Effective communication is essential for achieving professional...</p>
+                <a href="{% url 'writing_email' %}"> <button class="blog-more">Read </button></a>
+
+            </div>
+        </div>
+     </div>
+     <!-- 04 -->
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://www.gulfjobs.com/uploads/blogs/resume-writing-tips-865x450_985.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>Writing resume – Tips & tricks</h3>
+                <p>Employers utilize resumes throughout the recruiting process to learn more... </p>
+                 <a href="{% url 'writing_resume' %}"> <button class="blog-more">Read </button></a>
+
+            </div>
+        </div>
+     </div>
+     <!-- 05 -->
+     <div class="blog-wrapper">
+        <div class="blog-card">
+            <img src="https://cdn.pixabay.com/photo/2021/03/29/12/16/stairs-6133971_1280.jpg" class="blog-image" alt="">
+            <div class="blog-detail">
+                <h3>How to enjoy your work</h3>
+                <p>A job title is a name or designation given to a job or position.</p>
+                 <a href="{% url 'things_you_should_know' %}"> <button class="blog-more">Read </button></a>
+
+            </div>
+        </div>
+     </div>
+</section>
+   <!-- footer -->
+  <!-- {% comment %} <footer>
+    <div class="row">
+        <div class="col">
+             <h4>Quick Links</h4>
+            <ul>
+                <li><a href="">&#8888;About Us</a></li>
+                <li><a href="">&#8888;FAQs</a></li>
+                <li><a href=""> &#8888;Contact Us</a></li>
+                <li><a href="">&#8888;Privacy and Policy</a></li>
+                <li><a href=""> &#8888;Terms and Conditions</a></li>
+          </ul>
+        </div>
+        <div class="col">
+            <h4>For Job Seekers</h4>
+            <ul>
+                <li><a href="">&#8888;Home</a></li>
+                <li><a href="">&#8888;Browse Jobs</a></li>
+                <li><a href="">&#8888;Job Alerts</a></li>
+                <li><a href="">&#8888;Register</a></li>
+                <li><a href="">&#8888;Login</a></li>
+            </ul>
+        </div>
+        <div class="col">
+        <h4>For Employers</h4>
+            <ul>
+                <li><a href="#">&#8888;Browse Candidates</a></li>
+                <li><a href="#">&#8888;Employer Dashboard</a></li>
+                <li><a href="#">&#8888;Free Job Posting</a></li>
+                <li><a href="#">&#8888;Register</a></li>
+                <li><a href="#">&#8888;Login</a></li>
+            </ul>
+        </div>
+        <div class="col">
+            <h4>Browse Jobs</h4>
+                <ul>
+                    <li><a href="#">&#8888;All jobs</a></li>
+                    <li><a href="#">&#8888;Jobs by City</a></li>
+                    <li><a href="#">&#8888;Jobs by Location</a></li>
+                    <li><a href="#">&#8888;Jobs by Industry</a></li>
+                    <li><a href="#">&#8888;Jobs by Functional Area</a></li>
+                </ul>
+            </div>
+        <div class="col">
+            <h4>Follow Us</h4>
+           <!-- <form >
+                <i class="far fas fa-envelope"></i>
+                <input type="email" placeholder="Enter Your Email ">
+                <button type="submit"><i class="fas fa-arrow-right"></i></button>
+           </form>
+            <div class="social-icons">
+               <a href=""> <i class="fa-brands fa-facebook-f"></i></a>
+              <a href=""> <i class="fa-brands fab fa-youtube"></i></a>
+              <a href=""> <i class="fa-brands fab fa-twitter"></i></a>
+              <a href=""> <i class="fa-brands fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+ </div>
+</footer> {% endcomment %} -->
+
+
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> {% endcomment %}
+
+    {% comment %} <script src="./main.js"></script> {% endcomment %}
+     <script src="{% static 'js/main.js' %}"> </script>
+     <script src="{% static 'js/swiper-bundle.min.js' %}"> </script>
+     {% comment %} <script src="{% static 'js/swiper-bundle.min.js' %}"></script> {% endcomment %}
+  <script>
+   
+   var swiper = new Swiper(".mySwiper", {
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints:{
+    0: {
+      slidesPerView:1,
+    },
+    540: {
+      slidesPerView:2,
+    },
+    850: {
+      slidesPerView:3
+    }
+  },
+  pagination: {
+    el:".swiper-pagination",
+    clickable: true,
+    dynamicBullets:true,
+  },
+  loop: true,
+  grabCursor:true,
+  
+  slidesPerView: 3,
+  spaceBetween: 25,
+  // slidesperPerGroup:3, 
+  // loopFillGroupWithBlank:true,
+  centereSlide:'true',
+  fade: 'true'
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let sections = document.querySelectorAll('section');
+    let navLinks = document.querySelectorAll('.menu ul li a ');
+
+    window.onscroll = () => {
+        sections.forEach(sec => {
+            let top = window.scrollY;
+            let offset = sec.offsetTop - 250;
+            let height = sec.offsetHeight;
+            let id = sec.getAttribute('id');
+            // console.log(sec.offsetTop)
+            if(top >= offset && top < offset + height){
+                navLinks.forEach(links => {
+                    // console.log(links)
+                    links.classList.remove('active');
+                    document.querySelector('.menu ul li a[href*=' + id + ']').classList.add('active');
+                    console.log(navLinks)
+                });
+            }
+        });
+    };
+});
+
+  </script>
+     
+{% endblock  %}

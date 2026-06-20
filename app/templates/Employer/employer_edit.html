@@ -1,0 +1,390 @@
+{% extends 'base.html'  %}
+{% load static %}
+
+{% block 'title' %}  Employer Edit Form {% endblock  %}
+      {% block 'style' %}
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+            
+        }
+        body {
+            width: 100%;
+            height: 100vh;
+           overflow-x: hidden;
+
+           justify-content: center;
+        }
+        .container {
+            
+            max-width: 500px;
+           min-height: 300px;
+            min-width: 500px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 2% auto ;
+            color:black;
+            background-color: aliceblue;
+            border:1px solid gray;
+        }
+        .container .header {
+            position:relative;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color:navy;
+            text-align: center;
+        }
+        
+        .container #form {
+            min-height: 300px;
+             position:relative; 
+            color:white;
+            margin-top: 1rem;
+        }
+        .container #form .title {
+            display: block;
+            margin-bottom:8px ;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: cornflowerblue; 
+            
+        }
+    
+        .container #form .fields {
+            display:inline ;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+            /* background-color: #4070f4; */  cursor: pointer;
+        }
+        .input-fields {
+         display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     
+        }
+        .input-fields input {
+
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            /* border:1px solid black; */
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+            transition: 0.3s;
+           
+        }
+        .input-fields input:hover{
+            border-bottom: 1px solid #4070f4;
+            background-color: white;
+        }
+     
+        .file {
+              width:calc(100% / 1 - 16px);
+            height: 40px;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            margin:0px 8px 0px 7px;
+            border-radius: 4px;
+            padding: 0 15px;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+        }
+        .cv-file {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: cornflowerblue; 
+        }
+        .ins-uni {
+            display:flex;
+           flex-direction:column;
+           width:calc(100% / 1 - 16px);
+           margin:5px 5px;
+           justify-content: space-between;
+           color:cornflowerblue;
+           font-size: 1.3rem;
+        }
+        .ins-uni input {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            border:1px solid black;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+     
+        }
+
+        .container #form button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            min-width: 150px ;
+            max-width: 250px ;
+            width:100%;
+            background-color: #4070f4;
+            outline: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            margin: 25px auto;
+            border-radius: 5px;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+        #form button:hover {
+            border: 1px solid #4070f4;
+            background-color: transparent;
+            color:black;
+        }
+        #form .buttons .backBtn:hover {
+            border: 1px solid #4070f4;
+            background-color: transparent;
+            color:black;
+        }
+ 
+        #form .buttons {
+            display: flex;
+            align-items: center;
+        }
+        #form .buttons .backBtn{
+            margin-right: 14px;
+            
+        }
+       .helper-text {
+        font-size: 0.9rem;
+        color:black;
+       }
+       em{
+        margin-left: -5px;
+        font-size: 1.3rem;
+        color: rgb(241, 32, 17);
+       }
+       .container #form textarea {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            border:1px solid black;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+            display:inline-flex;
+           flex-direction:column;
+           width:calc(100%/1 - 16px);
+            resize: vertical;
+            justify-content: space-between;
+            color:cornflowerblue;
+            font-size: 1.3rem;
+       }
+
+     
+@media  screen and ( max-width: 800px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+
+}
+
+ @media  screen and ( max-width: 700px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+     .container{
+        min-width: 300px;
+        width: 100%;
+        margin:25px 10px;
+        font-size: 0.8rem;
+     }
+     .container #form button {
+        margin-left: 40px;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 2rem;
+     }
+
+ }
+ /* @media  screen and ( max-width: 900px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 16px);
+        margin:5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     }
+ } */
+    </style>
+   {% endblock  %}
+
+    {% block 'content' %}
+    <div class="container">
+        <header class="header">Employer Edit Form</header>
+        {% include "_messages.html" %}
+
+        <form id="form" action="" method = "POST" >
+            {% csrf_token %}
+            {% comment %} <div class="form first"> <span class="title">Personal Details</span> {% endcomment %}
+                   
+                <div class="details personal">
+                   
+                    <div class="fields">
+                          <div class="input-fields">
+                                <label for="">Full Name <em>*</em></label>
+                                {{ form_data.first_name }}
+                                {% comment %} <input type="text" placeholder="Enter Your First Name" > {% endcomment %}
+                          </div>
+                    </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Username <em>*</em></label>
+                                 {{ form_data.username }}
+                              {% comment %} <input type="text" placeholder="Enter Your Last Name" > {% endcomment %}
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Email <em>*</em></label>
+                                  {{ form_data.email }}
+                              {% comment %} <input type="email" placeholder=" Your birth Email " > {% endcomment %}
+                        </div>
+                   </div>
+
+                   <div class="fields">
+                    <div class="input-fields">
+                          <label for=""> Company <em>*</em></label>
+                         <input type="text" name="company" placeholder="Company Name" > 
+                    </div>
+              </div> 
+             
+{% comment %} 
+            <div class="fields">
+                  <div class="input-fields">
+                      <label for="">Gender  <em> *</em></label>
+                      <input type="text" placeholder=" Enter Your Gender" >
+                  </div>
+            </div>
+ 
+          <div >
+               <label for="" class="cv-file">Your CV <em>*</em></label>
+               <div  class="file">
+                    {{ form_data.profile_img }}
+                   {% comment %} <input type="file" > 
+              </div>
+        </div>
+    </div>
+ </div>
+         <br>
+            <div class="form second"> 
+                <span class="title">Contact Info </span>
+                <div class="details ID">
+                
+                    <div class="fields">
+                          <div class="input-fields">
+                                <label for="">Contact No. <em>*</em></label>
+                                     {% comment %} {{ form_data.contact_no }} 
+                                <input type="number" placeholder=" Your Contact No." >
+                                <span class="helper-text">(Include your country code too)</span>
+                          </div>
+                       
+                    </div> 
+                   
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Nationality</label>
+                              <input type="text" placeholder="Enter Your Nationality" >
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Current Location <em>*</em></label>
+                              <input type="" placeholder=" Your Current Location " >
+                        </div>
+                   </div> {% endcomment %}
+                   <!-- <div class="buttons">
+                        <button class="backBtn">Previous </button>
+                        <button class="nextBtn">Next </button>
+                 </div>
+             -->
+                  <!-- third -->
+            {% comment %} 
+                <span class="title">Education </span>
+             
+                
+                    <div class="ins-uni-p" >
+                        <div class="ins-uni" >
+                            <label for="">Institute/University <em>*</em></label>
+                             <input type="text" placeholder="Institute or University Name" >
+                       </div>
+                    </div> 
+
+                   
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Years Completed <em>*</em></label>
+                              <input type="" placeholder="Experienced Years " >
+                        </div>
+                   </div>
+                   <label for="" class="ins-uni">Your Motive</label>
+
+                    <textarea  id="w3review" name="w3review" placeholder="">
+                             
+                    </textarea>
+                    <span class="helper-text">(Introduction,Goals in life and what are you doing to reach your goals.)</span> {% endcomment %}
+                     <div class="buttons">
+                            <button class="nextBtn">UPDATE</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock  %}

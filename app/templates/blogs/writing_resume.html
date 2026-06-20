@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Things You Should Know {% endblock  %}
+
+{% block 'style' %} 
+<style>
+*{
+  margin:0px;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+        
+}
+body {
+    width: 100%;
+    height:100%;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+    .container {
+      {% comment %} min-height: 300px; {% endcomment %}
+      position: relative;
+      min-width: 400px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+      margin: 2% auto ;
+      color:black;
+      background-color: aliceblue;
+      /* border:1px solid gray; */
+      font-weight: lighter;
+      box-shadow:1px 1px  3px 4px #ccc;
+
+
+    } 
+    .content {
+      justify-content:center ;
+      align-items: center;
+      text-align:left;
+      flex-wrap: wrap;
+    }
+    .container .img{
+      height:300px;
+      width:500px;
+      margin:5% auto;
+      {% comment %} margin:10px; {% endcomment %}
+      justify-content:center ;
+      text-align:center;
+      align-items: center;
+
+    }
+    .container p {
+        color:gray;
+        font-weight: lighter;
+      }
+      .container h2 {
+        font-weight:bold;
+      }
+      .container h3 {
+          font-weight: bold;
+      }
+      .container p .link {
+          text-decoration:none;
+          font-size: 1rem;
+          
+      }
+  </style>
+{% endblock  %}
+
+{% block 'content' %}  
+
+<div class="container"> 
+  <div class="content">
+  <h2>Writing resume – Tips & tricks </h2>
+
+  <img class="img" src="https://www.gulfjobs.com/uploads/blogs/resume-writing-tips-865x450_985.jpg" alt="Image">
+   <p>Employers utilize resumes throughout the recruiting process to learn more about candidates and determine whether or not they would be a suitable match for the position in question. 
+    Easy to read resumes that summarize your achievements and talents while highlighting relevant work experience is ideal for job seekers. 
+    The following are some suggestions to assist you in writing a strong CV.</p>
+<br>
+<p>While there are a few basic resume formats to choose from, your resume should be tailored to your specific education, work experience, and transferable abilities. 
+    Having many versions of your resume, each suited to the specific positions you're looking for, is something you may want to explore. 
+    Here are a few essential resume writing guidelines that can assist you in organizing and designing your resume.
+</p><br>
+<h3>Keywords Usage</h3>
+<p>When preparing to compose a resume, the best place to start is by carefully reading the job advertisements that you are interested in applying for. 
+    As you submit your applications for various positions, especially in UAE, 
+    you should carefully review each job description for keywords that indicate what the company is looking for in a qualified applicant. 
+    Incorporate such keywords into your CV wherever possible.
+</p> <br>
+<h3>Use mature font</h3>
+<p>
+    Because employers only have a limited amount of time to study your resume, it should be as concise and simple to read as possible. 
+    You should select a straightforward, uncluttered typeface such as Arial or Times New Roman.
+     Maintain a font size between 10 and 12 points on your document. Choosing a clear,
+     legible font can assist in elevating the appearance of your resume and making it look more professional.
+     <br>In addition, you should make an effort to remove or eliminate any unnecessary whitespace.
+      Too much white space on your resume may give the impression that it is lacking in substance, causing the audience to get distracted and perhaps triggering a red flag.
+      By eliminating unnecessary white space from your resume, you make it easy for the resume reader to concentrate only on the substance of your resume rather than the empty spaces.
+      By raising the font size to 12 points, you may limit the amount of white space on your page.
+</p><br>
+<h3>Avoid irrelevant information</h3>
+<p>
+    Despite the fact that you may have substantial professional or school experience, it is vital to make your resume as concise as possible while still including all of the necessary information.
+     When reviewing resumes, hiring managers don't spend a lot of time on each one. According to research, 
+    hiring managers prefer to spend just 6 seconds on each CV they get if your resume contains outdated or irrelevant information, such as positions had more than ten years ago or modest degrees and accomplishments,
+     which may detract from the importance of the material that is presented.
+</p> <br>
+<h3>No passive voice!</h3>
+<p>
+    Your resume should be written in an aggressive voice, with no unnecessary words or phrases. 
+    This necessitates the use of powerful terms such as "achieved," "earned," "finished," and "accomplished," among others.
+    If your resume is too lengthy or seems to be difficult to read, you may want to try making sentences shorter and concepts more succinct.
+</p>
+<h3>Conclusion</h3>
+<p>
+    When it comes to landing an interview with a potential employer, your CV is often the first step. Make certain that your resume has the most relevant information possible,
+     that it is organized to showcase the most critical information, and that it is thoroughly reviewed for inaccuracies.
+     It is expected that after your resume has been polished and finished, 
+    it will allow you to get more callbacks, interviews, and job offers in return.
+</p>
+</div>
+</div>
+
+
+{% endblock  %}

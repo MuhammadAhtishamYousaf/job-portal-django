@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Things You Should Know {% endblock  %}
+
+{% block 'style' %} 
+<style>
+*{
+  margin:0px;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+        
+}
+body {
+    width: 100%;
+    height:100%;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+    .container {
+      position: relative;
+      min-width: 400px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+      margin: 2% auto ;
+      color:black;
+      background-color: aliceblue;
+      /* border:1px solid gray; */
+      font-weight: lighter;
+      box-shadow:1px 1px  3px 4px #ccc;
+
+
+    } 
+    .content {
+      justify-content:center ;
+      align-items: center;
+      text-align:left;
+      flex-wrap: wrap;
+    }
+    .container .img{
+      height:300px;
+      width:500px;
+      margin:5% auto;
+      justify-content:center ;
+      text-align:center;
+      align-items: center;
+
+    }
+    .container p {
+      color:gray;
+      font-weight: lighter;
+    }
+    .container h2 {
+      font-weight:bold;
+    }
+    .container h3 {
+        font-weight: bold;
+    }
+    .container p .link {
+        text-decoration:none;
+        font-size: 1rem;
+        
+    } 
+  </style>
+{% endblock  %}
+
+{% block 'content' %}  
+
+<div class="container"> 
+  <div class="content">
+  <h2>Most asked questions during an interview </h2>
+
+  <img class="img" src="https://www.gulfjobs.com/uploads/blogs/getty_186693264_200011642000928062_327104_532.jpg" alt="Image">
+   <p>Are you prepared to perform admirably in your forthcoming job interview? In particular, 
+    in the Gulf, one of the most crucial aspects of interview preparation is being prepared to reply well to the kind of questions that employers often throw at candidates.
+    Because these interview questions are so prevalent, hiring managers will want you to be able to respond to them fluently and without hesitation,
+    so practice answering them before your interview.
+  </p>
+<br>
+
+
+
+<h3>Introduce yourself</h3>
+<br>
+<p> <a class="link" href="https://www.themuse.com/advice/interview-questions-and-answers">Interviewers</a> like hearing tales about the applicants they are interviewing.
+    Make sure your tale has a strong beginning, a gripping middle, 
+    and a compelling conclusion that will make the interviewer root for you to get the position.
+</p> <br>
+<p>
+    Discuss a meaningful experience that piqued your interest in the career you are pursuing,
+    and then go on to talk about your educational upbringing.
+    Integrate your academic expertise and love for the topic or area that the firm specializes in,
+    as well as your professional experience, into the narrative to demonstrate that you are a 
+    fantastic match for the position. Whether you've overseen a complicated project or worked on
+    an interesting, 
+    outlandish design, be sure to highlight it
+</p> 
+ <br>
+<h3>How did you hear about us?</h3>
+<br>
+<p>
+    When questioning for a job, companies want to know if you are actively seeking out their firm, 
+    whether you learned about the opening via a recruiter,
+    or whether you were suggested for the position by an existing employee. In a nutshell, 
+    they want to know how you came to be with them.
+</p><br>
+<p>
+    If you were recommended for the job, be sure to mention who suggested you. Don't make the assumption that
+    the interviewer is already aware of the recommendation. Most likely,
+    you'll want to follow up with the person who suggested you find out more about them. For example, 
+    if you and Steve (the person who suggested you) had previously worked together or if you met him over hi-tea at a networking event, 
+    mention it to lend yourself a bit more credibility to your application.
+    Provide an explanation as to why Steve, who works at the firm,
+    believes you would be an excellent match for the position.
+</p><br>
+<h3>Explain dealing with anxiety</h3>
+<br>
+<p>
+    The employer wants to identify whether you can maintain your composure under duress or if you buckle under the strain.
+    They want to make sure that you don't suffer a nervous breakdown as the strain mounts and the deadlines loom close.
+    The capacity to maintain one's composure under duress is a highly sought-after skill.
+<br> <br>
+    Please describe a time when you maintained your composure in the face of adversity.
+    If it's a talent you're working on improving, 
+    recognize that and explain 
+    the actions you're doing to be 
+    more effective under pressure in the near future.
+    You may, for example, mention that you've begun mindfulness 
+    practice to assist you in better cope with stress and anxiety.
+</p><br>
+<h3>Are you a team man?</h3>
+<br>
+<p>If you've done any research on the corporate culture and the
+     position in question, your response should be influenced by
+      that study. Nonetheless, you can anticipate that most job 
+      contexts will include some element of teamwork.
+
+<br>
+    Every day, many occupations demand you to collaborate with other people, while others require you to
+     operate alone in certain situations. When answering this question, make a point of
+     emphasizing the positive aspects of your personality that
+     correspond to the work criteria. Answering this question by underlining the positives and downsides of
+     both scenarios may also be in your best interests</p>
+</div>
+</div>
+
+
+{% endblock  %}

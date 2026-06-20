@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Things You Should Know {% endblock  %}
+
+{% block 'style' %} 
+<style>
+*{
+  margin:0px;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+        
+}
+body {
+    width: 100%;
+    height:100%;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+    .container {
+      {% comment %} min-height: 300px; {% endcomment %}
+      position: relative;
+      min-width: 400px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+      margin: 2% auto ;
+      color:black;
+      background-color: aliceblue;
+      /* border:1px solid gray; */
+      font-weight: lighter;
+      box-shadow:1px 1px  3px 4px #ccc;
+
+
+    } 
+    .content {
+      justify-content:center ;
+      align-items: center;
+      text-align:left;
+      flex-wrap: wrap;
+    }
+    .container .img{
+      height:300px;
+      width:500px;
+      margin:5% auto;
+      {% comment %} margin:10px; {% endcomment %}
+      justify-content:center ;
+      text-align:center;
+      align-items: center;
+
+    }
+    .container p {
+        color:gray;
+        font-weight: lighter;
+      }
+      .container h2 {
+        font-weight:bold;
+      }
+      .container h3 {
+          font-weight: bold;
+      }
+      .container p .link {
+          text-decoration:none;
+          font-size: 1rem;
+          
+      }
+  </style>
+{% endblock  %}
+
+{% block 'content' %}  
+
+<div class="container"> 
+  <div class="content">
+  <h2>How to stay confident during an interview</h2>
+
+  <img class="img" src="https://www.gulfjobs.com/uploads/blogs/_197898_bloghero_146.jpg" alt="Image">
+   <p>It might be equally as crucial as exhibiting your abilities and presenting your unique 
+    characteristics in a job interview to project confidence throughout the interview. It is 
+    important to rehearse the manner in which you convey confidence and professionalism since
+    doing so may boost your performance in the room while also calming your nerves if you are 
+    nervous. This article offers advice on how to exude confidence during job interview situations.
+
+  </p>
+<br>
+
+
+
+<h3>Importance of confidence</h3>
+<p> Confidence is defined as the act of placing your confidence in yourself.
+     During a job interview, espacially in Dubai, demonstrating your confidence
+      in yourself is crucial since it might inspire the interviewer to place their 
+      faith in you as well. Make an effort to convey to the interviewer that you are 
+      confident in your ability to perform the duties of the position. However, it is 
+      natural to feel apprehensive before an interview, so try to set aside some time to
+       prepare for the meeting by practicing how to seem confident in your answers.
+</p> <br>
+<h2>Tips and strategies for boosting your confidence</h2>
+<br><br>
+<h1>Eye contact.</h1>
+<p>
+    If you want to project <a href="https://www.themuse.com/advice/5-ways-to-look-confident-in-an-interview-even-when-youre-freaking-out"> confidence</a>, 
+    start by making eye contact with others. 
+    Maintaining natural and steady eye contact during your interview is a great approach to
+    showing confidence and professionalism. Instead of establishing eye contact that seems 
+    intense or protracted, try to maintain natural eye contact as much as possible. Before 
+    returning your focus to the HR, take a few moments to glance over your résumé or any materials
+    you brought with you to the interview.
+</p> 
+ <br>
+<h1>Body language</h1>
+<p>
+    Following your efforts to improve your eye contact, you may find it beneficial to concentrate on your posture as well. In order to convey 
+    confidence during your interview, your body language must be on-point. Begin by sitting with your arms unfolded on your lap to express an open
+    and welcoming demeanor to the audience. Maintain a straight back, shoulders back, chest and chin high, and your shoulders back.
+</p><br>
+<br>
+<h1>Appropriate breathing</h1>
+  <p>
+    Nervousness causes blood to divert from the brain to the muscles in preparation for either fight or flight.
+     Blood flow to the brain declines, which might have an effect on cognitive abilities. Breathing slowly and deeply 
+     allows you to replenish oxygen in your brain, which allows you to think more clearly and effectively.
+    </p>
+<br> <br>
+<h1>Relaxation</h1>
+<p>A person's fidgeting indicates that they are uneasy. Make a mindful effort to keep your hands on the table if you have a tendency to tap them or twist them.
+     If you have a leaning to fidget with whatever you are holding, you should make it a point not to have a pen or paper in your hands. In the event that you 
+     often shake your leg when you are frightened, you might maintain your hands on your lap and apply a little amount of pressure to remind yourself to cease 
+     the shaking. Make an effort to ask a friend or family member to describe your fidgeting behavior so that you may become more conscious of your behaviors 
+     and work on them. 
+</p>
+<br> <br>
+<h1>Preparation</h1>
+    <p>
+    Making a list of responses to typical <a href="https://www.themuse.com/advice/5-ways-to-look-confident-in-an-interview-even-when-youre-freaking-out">interview</a> 
+    questions is a fantastic technique to demonstrate interview confidence. When you come into an interview with 
+    the knowledge that you have done your research, it may alleviate some of the stress and make you feel more secure. Consider sitting down with a friend or a 
+    family member to brainstorm possible responses to these questions. Rather than memorizing answers, you should attempt to prepare enough so that you can 
+    provide replies that you are proud of.
+</p>
+    </div>
+    </div>
+
+
+{% endblock  %}

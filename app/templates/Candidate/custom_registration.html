@@ -1,0 +1,457 @@
+ {% extends 'base.html'  %}
+{% load static %}
+
+{% block 'title' %}    Registration Form {% endblock  %}
+      {% block 'style' %}
+    <style>
+        *{
+            margin:0px;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+            
+        }
+        body {
+            width: 100%;
+            height:100%;
+           overflow-x: hidden;
+           position: absolute;
+           justify-content: center;
+        }
+        .container {
+          
+            position: relative;
+            min-width: 500px;
+            width: 80%;
+            border-radius: 16px;
+            padding: 10px;
+            margin:50px 100px ;
+            margin-left: 13%;
+            background-color: wheat;
+            /* box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+            10px 10px 70px rgba(0,0,0,0.25),
+            inset 5px 5px 10px rgba(0,0,0,0.5),
+            inset 5px 5px 20px rgba(255,255,255,0.2),
+            inset -5px -5px 15px rgba(0, 0, 0, 0.75);  */
+        }
+        .container .header {
+            position:relative;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color:navy;
+            text-align: center;
+        }
+        /* .container header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 5px;
+            width:28px;
+            border-radius: 9px;
+            background: cornflowerblue;
+        } */
+        .container #form {
+            min-height: 500px;
+             position:relative; 
+            color:white;
+            margin-top: 1rem;
+        }
+        .container #form .title {
+            display: block;
+            margin-bottom:8px ;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: cornflowerblue; 
+            
+        }
+    
+        .container #form .fields {
+            display:inline ;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+            /* background-color: #4070f4; */  cursor: pointer;
+        }
+        .input-fields {
+         display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     
+        }
+        .input-fields input {
+
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            /* border:1px solid black; */
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+            transition: 0.3s;
+           
+        }
+        .input-fields input:hover{
+            border-bottom: 1px solid #4070f4;
+            background-color: white;
+        }
+     
+        .file {
+              width:calc(100% / 1 - 16px);
+            height: 40px;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            margin:0px 8px 0px 7px;
+            border-radius: 4px;
+            padding: 0 15px;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+        }
+        .cv-file {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: cornflowerblue; 
+        }
+        .ins-uni {
+            display:flex;
+           flex-direction:column;
+           width:calc(100% / 1 - 16px);
+           margin:5px 5px;
+           justify-content: space-between;
+           color:cornflowerblue;
+           font-size: 1.3rem;
+        }
+        .ins-uni input {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            border:1px solid black;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+     
+        }
+
+        .container #form button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px;
+            min-width: 200px ;
+            width:100%;
+            background-color: #4070f4;
+            outline: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            margin: 25px 90px;
+            border-radius: 5px;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+        #form button:hover {
+            border: 1px solid #4070f4;
+            background-color: transparent;
+            color:black;
+        }
+        #form .buttons .backBtn:hover {
+            border: 1px solid #4070f4;
+            background-color: transparent;
+            color:black;
+        }
+ 
+        #form .buttons {
+            display: flex;
+            align-items: center;
+        }
+        #form .buttons .backBtn{
+            margin-right: 14px;
+            
+        }
+       .helper-text {
+        font-size: 0.9rem;
+        color:black;
+       }
+       em{
+        margin-left: -5px;
+        font-size: 1.3rem;
+        color: rgb(241, 32, 17);
+       }
+       .container #form textarea {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            border:1px solid black;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+            display:inline-flex;
+           flex-direction:column;
+           width:calc(100%/1 - 16px);
+            resize: vertical;
+            justify-content: space-between;
+            color:cornflowerblue;
+            font-size: 1.3rem;
+       }
+     
+@media  screen and ( max-width: 800px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+ @media  screen and ( max-width: 700px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+     .container{
+        min-width: 300px;
+        width: 100%;
+        margin:25px 10px;
+        font-size: 0.8rem;
+     }
+     .container #form button {
+        margin-left: 40px;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 2rem;
+     }
+
+ }
+ /* @media  screen and ( max-width: 900px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 16px);
+        margin:5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     }
+ } */
+    </style>
+   {% endblock  %}
+
+    {% block 'content' %}
+    
+    <div class="container">
+      
+
+  <!-- {% if form.errors %}
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}  -->
+
+     <!-- {% if form.errors %}
+    {{ form.errors }}
+{% endif %}  -->
+
+        <header class="header">Registration</header>
+        
+        <form id="form" action="{% url 'custom_candidate_registration' %}" method = "POST" >
+        
+            {% csrf_token %}
+            <div class="form first"> <span class="title">Personal Details</span>
+                   
+                <div class="details personal">
+                   
+                    <div class="fields">
+                          <div class="input-fields">
+                                <label for="">Full Name <em>*</em></label>
+                                 {{ form_data.first_name }} 
+                                {% comment %} <input type="text" placeholder="Enter Your First Name" > {% endcomment %}
+                          </div>
+                    </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Username <em>*</em></label>
+                                {{ form_data.username }}
+                              {% comment %} <input type="text" placeholder="Enter Your Last Name" > {% endcomment %}
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Email <em>*</em></label>
+                                {{ form_data.email }} 
+                              {% comment %} <input type="email" placeholder=" Your birth Email " > {% endcomment %}
+                        </div>
+                   </div>
+
+                  <div class="fields">
+                        <div class="input-fields">
+                            <label for="">Password <em>*</em></label>
+                                {{ form_data.password1 }} 
+                            {% comment %} <input type="password" placeholder=" Password" > {% endcomment %}
+                        </div>
+                  </div>
+    
+              <div class="fields">
+                  <div class="input-fields">
+                        <label for="">Confirm Password <em>*</em></label>
+                             {{ form_data.password2 }}
+                   {% comment %} <input type="text" placeholder=" Confirm Password" >  {% endcomment %}
+                  </div>
+             </div>
+
+            <div class="fields">
+                  <div class="input-fields">
+                      <label for="">Gender  <em> *</em></label>
+                       {{ form_data.gender}}
+                      {% comment %} <input type="text" placeholder=" Enter Your Gender" > {% endcomment %}
+                  </div>
+            </div>
+ 
+          {% comment %} <div >
+               <label for="" class="cv-file">Your CV <em>*</em></label>
+               <div  class="file">
+                       {% comment %} {{ form_data.cv}} 
+
+                  <input type="file" > 
+              </div>
+        </div> {% endcomment %}
+    </div>
+ </div>
+         <br>
+            <div class="form second"> 
+                <span class="title">Contact Info </span>
+                <div class="details ID">
+                
+                    <div class="fields">
+                          <div class="input-fields">
+                                <label for="">Contact No. <em>*</em></label>
+                                  {{ form_data.contact_no }} 
+                                {% comment %} <input type="number" placeholder=" Your Contact No." > {% endcomment %}
+                                <span class="helper-text">(Include your country code too)</span>
+                          </div>
+                       
+                    </div> 
+                   
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Nationality</label>
+                              <input type="text" placeholder="Enter Your Nationality" >
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Current Location <em>*</em></label>
+                                 {{ form_data.current_location}}
+                              {% comment %} <input type="" placeholder=" Your Current Location " > {% endcomment %}
+                        </div>
+                   </div>
+                   <!-- <div class="buttons">
+                        <button class="backBtn">Previous </button>
+                        <button class="nextBtn">Next </button>
+                 </div>
+             -->
+                </div>
+            </div> <br>
+            <!-- third -->
+            <div class="form third"> 
+                <span class="title">Education </span>
+                <div class="details ID">
+                
+                    <div class="ins-uni-p" >
+                        <div class="ins-uni" >
+                            <label for="">Institute/University <em>*</em></label>
+                             <input type="text" placeholder="Institute or University Name" >
+                       </div>
+                    </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Specialization <em>*</em></label>
+                             {{ form_data.specialization }} 
+                              {% comment %} <input type="text" placeholder="Specialized skill" > {% endcomment %}
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Years Completed <em>*</em></label>
+                              <input type="" placeholder="Experienced Years " >
+                        </div>
+                   </div>
+                   <label for="" class="ins-uni">Your Motive</label>
+
+                    <textarea  id="w3review" name="w3review" placeholder="">
+                             
+                    </textarea>
+                    <span class="helper-text">(Introduction,Goals in life and what are you doing to reach your goals.)</span>
+                     <div class="buttons">
+                            <button class="nextBtn">Register</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Display form errors -->
+    <!-- {% if form.errors %}
+        <div class="errors">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %} -->
+    </div>
+{% endblock  %} 

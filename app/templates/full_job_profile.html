@@ -1,0 +1,158 @@
+{% extends 'base.html'  %}
+{% load static %}
+ 
+    {% block 'title' %}  Full Job Profile {% endblock  %}
+    {% block 'style' %} 
+    <style>
+     *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            width: auto;
+            height:100%;
+            background: slategrey;
+            /* box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+            10px 10px 70px rgba(0,0,0,0.25),
+            inset 5px 5px 10px rgba(0,0,0,0.5),
+            inset 5px 5px 20px rgba(255,255,255,0.2),
+            inset -5px -5px 15px rgba(0, 0, 0, 0.75);  */
+            transition: 0.3s;
+            overflow-x: hidden;
+
+        }
+        .container {
+   
+        margin-top: 40px;
+        width: 100%;
+        display: flex;
+        height: 100%;
+        position: relative;
+        /* background-color: #333; */
+        justify-content:center ;
+        align-items: center;
+        flex-wrap: wrap;
+        } 
+        /* Add your CSS styles here */
+        .job {
+
+        {% comment %} height: 550px; {% endcomment %}
+        max-width: 700px;
+        width: 100%;
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        /* background-color: #f9f9f9; */
+        background-color: aliceblue;
+        color:black;
+        }
+        .job img {
+            float: left;
+            margin-right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .job h2 {
+            margin-top: 0;
+        }
+        .job p {
+            margin-bottom: 5px;
+        }
+    
+        .job .skills {
+            /* background-color: white; */
+            width: 120px;
+            background-color:rgb(217, 236, 223) ;
+            padding:10px;
+            margin: 5px;
+             
+        }
+        .container .required {
+            display: flex;
+        }
+        .download-btn {
+            width:130px;
+        margin-top: 10px;
+        padding:10px;
+        height: 40px;
+        background-color: #4682B4;
+        border:none;
+        outline: none;
+        font-size: medium;
+        color:white;
+        box-shadow: 3px 4px  1px rgb(255, 171, 14);
+        text-shadow: 1px 1px 10px white,
+            10px 0 60px  pink ,10px 0 100px dodgerblue,
+            0 0 100px rgb(255, 255, 255), 10px 0 100px darkblue; 
+
+        }
+        .btn {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            margin:30px;
+        }
+
+    </style>
+     
+    {% endblock %}
+
+    {% block 'content' %}
+
+<div class="container">
+  {% include "_messages.html" %}
+
+    {% for jobs in jobs %} 
+    <div class="job">
+        <img src="company_logo.jpg" alt="Company Logo">
+          Company <h2> {{jobs.company_name}} </h2>
+        Title
+        <h2><strong>{{ jobs.job_title}} </strong></h2>
+        <p><strong>Job Description:</strong>    {{jobs.job_description}} </p>
+        <p><strong>Posting Date:</strong>    {{jobs.posting_date}} </p>
+        <p><strong>Location:</strong>    {{jobs.job_location}} </p>
+        <p><strong>Salary:</strong> {{jobs.salary}} </p>
+        <p><strong>Industry:</strong> {{jobs.industry}} </p>
+        <p><strong>Education:</strong> {{jobs.education}} </p>
+        <p><strong>Experience Required:</strong> {{jobs.experience_required}} </p>
+        <p><strong>Gender:</strong> {{jobs.gender}} </p>
+        
+        <h2><strong>Skills Required</strong> </h2>
+        <p>  {{jobs.skills_required}} </p>
+         <h2> Employer Details </h2>
+           <p><strong> Name:</strong> {{jobs.name}} </p>
+           <p><strong> Phone Number:</strong> {{jobs.mobile_no}} </p>
+           <p><strong> Email:</strong> {{jobs.email}} </p>
+        <div class="btn">
+            <button class="download-btn"> Apply Now </button>
+            </div>
+         {% comment %} <div class="required">
+         <p class="skills" >Advanced Level</p>
+         <p class="skills" >Advanced Level</p>
+         </div> {% endcomment %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- {% comment %} <div class="job">
+    <img src="company_logo.jpg" alt="Company Logo">
+    <h2>Company Name 2</h2>
+    <p><strong>Job Title:</strong> Data Analyst</p>
+    <p><strong>Job Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p><strong>Posting Date:</strong> February 25, 2024</p>
+    <p><strong>Requirements:</strong> 
+        <ul>
+            <li>Bachelor's degree in Statistics or related field</li>
+            <li>Experience with data analysis tools</li>
+            <li>Excellent analytical skills</li>
+        </ul>
+    </p>
+</div> {% endcomment %} -->
+
+<!-- Add more job listings as needed -->
+
+{% endblock  %}

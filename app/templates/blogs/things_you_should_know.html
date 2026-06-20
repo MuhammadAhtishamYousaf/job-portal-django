@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Things You Should Know {% endblock  %}
+
+{% block 'style' %} 
+<style>
+*{
+  margin:0px;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+        
+}
+body {
+    width: 100%;
+    height:100%;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+    .container {
+      {% comment %} min-height: 300px; {% endcomment %}
+      position: relative;
+      min-width: 400px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+      margin: 2% auto ;
+      color:black;
+      background-color: aliceblue;
+      /* border:1px solid gray; */
+      font-weight: lighter;
+      box-shadow:1px 1px  3px 4px #ccc;
+
+
+    } 
+    .content {
+      justify-content:center ;
+      align-items: center;
+      text-align:left;
+      flex-wrap: wrap;
+    }
+    .container .img{
+      height:300px;
+      width:500px;
+      margin:5% auto;
+      {% comment %} margin:10px; {% endcomment %}
+      justify-content:center ;
+      text-align:center;
+      align-items: center;
+
+    }
+    .container p {
+      color:gray;
+      font-weight: lighter;
+    }
+    .container h2 {
+      font-weight:bold;
+    }
+    .container h3 {
+        font-weight: bold;
+    }
+    .container p .link {
+        text-decoration:none;
+        font-size: 1rem;
+        
+    }
+  </style>
+{% endblock  %}
+
+{% block 'content' %}  
+
+<div class="container"> 
+  <div class="content">
+  <h2>Things you should identify when searching for a job in UAE </h2>
+
+  <img class="img" src="https://www.gulfjobs.com/uploads/blogs/finding-a-job-in-dubai-uae-metro_730.jpg" alt="Image">
+   <p>It is feasible to obtain employment in the United Arab Emirates for those with a variety of talents. In Dubai, 
+    it might be challenging to find a job that is fit your skills and experience.
+     However, there are a variety of factors to consider before applying for a position in the United Arab Emirates.</p>
+<br>
+<p>Statistical analysis, data mining, public policy, international relations, algorithm design, web architecture, SEO/SEM marketing,
+   and user interface design are among the most sought-after talents for people searching for employment in the United Arab Emirates.
+   Where would be the most appropriate spot to begin your job hunt in the GCC's expanding labor market?
+    You'll discover a thorough guide to the most critical steps you'll need to take, including information on visas, sponsorship, interview suggestions,
+    and how to find work in the United Arab Emirates.
+</p><br>
+<h3>Visa Category</h3>
+<p>If you want to work in Dubai, you will need to get a work visa before you can begin. When it comes to Dubai corporations, 
+    obtaining employment with them is simple if you work for them. 
+    You will not be allowed to go to Dubai until you have obtained a work visa.
+      Therefore you should wait until you have been recruited. In order to visit the emirate for the purpose of job searching, 
+      you must first enter the nation on a tourist visa and then transfer your status after you find employment. 
+    A visa for the United Arab Emirates is provided upon arrival;
+    you do not need to get one in advance.
+</p> <br>
+<h3>Health card</h3>
+<p>
+  While your work visa application is being processed, the Department of Health and Medical Services will want a copy of your medical records, a picture of yourself, a copy of your passport, a copy of your letter of a job offer, and a copy of your visa application. To rule out contaminations such as HIV, Hepatitis C, and TB, a blood test will be required. Foreigners suffering from certain disorders are not permitted to reside in the United Arab Emirates. Once all the tests are completed, international employees in Dubai are required to get a health card.
+
+In addition to your passport and job contract, you'll be required to submit your medical records, entrance visa, employment contract, and employer's labor license to the Ministry of Labor before you can begin working. Visas for residence in Dubai are given by the General Directorate of Residency and Foreigners Affairs, which is part of the Dubai Municipality. After that, you'll need to fill out a form and bring in your passport, medical documents, a health certification, your original admission permit, passport pictures, and a copy of your labor card, among other things.
+</p><br>
+<h3>Online research</h3>
+<p>
+  A large number of job fairs are held in the United Arab Emirates. Job seekers receive information about the participating organizations and their jobs as a result of their participation in these fairs. The information they provide is especially useful for new grads since it allows them to decide the kind of industry they wish to get acquainted with. They also give a fantastic chance for networking with other professionals.
+
+Living and working in the UAE has its advantages and disadvantages, just like it does in any other nation. Nonetheless, if you can find a career that matches your abilities and interests, you will have the opportunity to soar to incredible heights.
+</p>
+</div>
+</div>
+
+
+{% endblock  %}

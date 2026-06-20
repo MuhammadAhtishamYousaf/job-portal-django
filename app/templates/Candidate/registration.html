@@ -1,0 +1,409 @@
+{% extends 'base.html'  %}
+{% load static %}
+
+{% block 'title' %}   Candidate Registration Form {% endblock  %}
+{% block 'style' %}
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+         
+            
+        }
+        body {
+            width: 100%;
+            height: 100vh;
+           overflow-x: hidden;
+
+           justify-content: center;
+        }
+        .container {
+           min-height: 300px;
+            position: relative;
+            min-width: 500px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 2% auto ;
+            color:black;
+            background-color: aliceblue;
+            /* border:1px solid gray; */
+            font-weight: lighter;
+            box-shadow:1px 1px  3px 4px #ccc;
+
+        }
+        .container .header {
+            position:relative;
+            font-size: 1.9rem;
+            font-weight: 600;
+            
+            text-align: center;
+        }
+        .container #form {
+            /* background-color: #155724; */
+            min-height: 400px;
+             position:relative; 
+            color: black;
+          
+        }
+        .container #form .title {
+            display: block;
+            margin-bottom:8px ;
+           
+        }
+    
+        .container #form .fields {
+            display:inline ;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+            cursor: pointer;
+        }
+        .input-fields {
+         display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+       
+        }
+        .input-fields input {
+
+            cursor: pointer;
+            flex-wrap: wrap;
+      
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 10px 15px;
+         
+            background-color: transparent;
+            box-shadow: 0 0 5px 3px rgba(0,0,0,0.1);
+
+            transition: 0.3s;
+           
+        }
+        .input-fields input:hover{
+            border-bottom: 1px solid #4070f4;
+          
+        }
+     
+        .file {
+              width:calc(100% / 1 - 16px);
+            height: 40px;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            margin:0px 8px 0px 7px;
+            border-radius: 4px;
+            padding: 0 15px;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+        }
+        .cv-file {
+            font-size: 1.3rem;
+            font-weight: 400;
+           
+        }
+        .ins-uni {
+            display:flex;
+           flex-direction:column;
+           width:calc(100% / 1 - 16px);
+           margin:5px 5px;
+           justify-content: space-between;
+           color:cornflowerblue;
+           font-size: 1.3rem;
+        }
+        .ins-uni input {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            border:1px solid black;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+     
+        }
+
+        .container #form button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            min-width: 200px ;
+            width:100%;
+            background-color:steelblue;
+            outline: none;
+            border: 2px solid white;
+            font-size: 1.5rem;
+            color: white;
+            margin: 25px 90px;
+            border-radius: 5px;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+        
+       
+ 
+        #form .buttons {
+            display: flex;
+            align-items: center;
+        }
+        #form .buttons .backBtn{
+            margin-right: 14px;
+            
+        }
+       .helper-text {
+        font-size: 0.9rem;
+        color:gray;
+       }
+       em{
+        margin-left: -5px;
+        font-size: 1.3rem;
+        color: rgb(241, 32, 17);
+       }
+
+       /* Success message */
+.alert-success {
+    color: #155724;  /* Text color */
+    background-color: #d4edda;  /* Background color */
+    border-color: #c3e6cb;  /* Border color */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-weight: lighter;
+    height: 30px;
+}
+
+/* Error message */
+.alert-error {
+    font-size: 1.1rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-weight: lighter;
+    height: 30px;
+   
+    background-color: #f8d7da;  /* Background color */
+    border-color: #f5c6cb;  /* Border color */
+}
+    
+@media  screen and ( max-width: 800px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+
+}
+
+@media  screen and ( max-width: 700px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1rem;
+     }
+     .container{
+        min-width: 300px;
+        width: 100%;
+        margin:25px 10px;
+        font-size: 0.8rem;
+     }
+     .container #form button {
+        margin-left: 40px;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 2rem;
+     }
+
+ }
+ /* @media  screen and ( max-width: 900px)  {
+     .input-fields{
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 16px);
+        margin:5px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     }
+ } */
+    </style>
+   {% endblock  %}
+
+{% block 'content' %}
+<div class="container">
+    <header class="header">Registration</header>
+    {% include "_messages.html" %}
+
+        
+    <form id="form" action="{% url 'candidate_registration'%}" method = "POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="form first"> <span class="title"></span>
+                
+            <div class="details personal">
+                    
+                        <div class="fields">
+                            <div class="input-fields">
+                                    <label for="">Full Name <em>*</em></label>
+                                    {{ form_data.first_name }}
+                                    {% comment %} <input type="text" placeholder="Enter Your First Name" > {% endcomment %}
+                            </div>
+                        </div> 
+
+                        <div class="fields">
+                            <div class="input-fields">
+                                <label for="">Username <em>*</em></label>
+                                    {{ form_data.username }}
+                                {% comment %} <input type="text" placeholder="Enter Your Last Name" > {% endcomment %}
+                            </div>
+                    </div> 
+
+                        <div class="fields">
+                            <div class="input-fields">
+                                <label for="">Email <em>*</em></label>
+                                    {{ form_data.email }}
+                                {% comment %} <input type="email" placeholder=" Your birth Email " > {% endcomment %}
+                            </div>
+                        </div> 
+
+                        <div class="fields">
+                        <div class="input-fields">
+                            <label for=""> Specialization <em> *</em></label>
+                                    {% comment %} {{ form_data.last_name }} {% endcomment %}
+                            <input type="text" name= "specialization" placeholder=" Specialization" >
+                            <span class="helper-text">(In what you're special to sell.)</span>
+                        </div>
+                    </div> 
+                            
+
+                    <div class="fields">
+                            <div class="input-fields">
+                                <label for="">Password <em>*</em></label>
+                                    {{ form_data.password1 }}
+                                    <span class="helper-text">(Password does not contain any word from your name,username and email.)</span>
+                                {% comment %} <input type="password" placeholder=" Password" > {% endcomment %}
+                            </div>
+                    </div>
+        
+                <div class="fields">
+                    <div class="input-fields">
+                            <label for="">Confirm Password <em>*</em></label>
+                                {{ form_data.password2 }}
+                            {% comment %} <input type="text" placeholder=" Confirm Password" > {% endcomment %}
+                    </div>
+                </div>
+
+                        <div class="buttons">
+                                <button class="nextBtn">Register</button>
+                        </div>
+                </div>
+            </div>
+    </form> 
+</div>
+{% endblock  %}
+
+<!--  
+          {% comment %} <div >
+               <label for="" class="cv-file">Your CV <em>*</em></label>
+               <div  class="file">
+                    {% comment %} {{ form_data.profile_img }}  
+                   <input type="file" >
+              </div>
+        </div>
+    </div>
+ </div>
+         <br>
+            <div class="form second"> 
+                <span class="title">Contact Info </span>
+                <div class="details ID">
+                
+                    <div class="fields">
+                          <div class="input-fields">
+                                <label for="">Contact No. <em>*</em></label>
+                                     {% comment %} {{ form_data.contact_no }} {% endcomment %}
+                                <input type="number" placeholder=" Your Contact No." >
+                                <span class="helper-text">(Include your country code too)</span>
+                          </div>
+                       
+                    </div> 
+                   
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Nationality</label>
+                              <input type="text" placeholder="Enter Your Nationality" >
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Current Location <em>*</em></label>
+                              <input type="" placeholder=" Your Current Location " >
+                        </div>
+                   </div>
+                   <!-- <div class="buttons">
+                        <button class="backBtn">Previous </button>
+                        <button class="nextBtn">Next </button>
+                 </div>
+           
+                </div>
+            </div> <br> -->
+            <!-- third -->
+            <!-- <div class="form third"> 
+                <span class="title">Education </span>
+                <div class="details ID">
+                
+                    <div class="ins-uni-p" >
+                        <div class="ins-uni" >
+                            <label for="">Institute/University <em>*</em></label>
+                             <input type="text" placeholder="Institute or University Name" >
+                       </div>
+                    </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Specialization <em>*</em></label>
+                              {% comment %} {{ form_data.spacialization }} {% endcomment %}
+                              <input type="text" placeholder="Specialized skill" >
+                        </div>
+                  </div> 
+
+                    <div class="fields">
+                        <div class="input-fields">
+                              <label for="">Years Completed <em>*</em></label>
+                              <input type="" placeholder="Experienced Years " >
+                        </div>
+                   </div>
+                   <label for="" class="ins-uni">Your Motive</label>
+
+                    <textarea  id="w3review" name="w3review" placeholder="">
+                             
+                    </textarea>
+                    <span class="helper-text">(Introduction,Goals in life and what are you doing to reach your goals.)</span>
+                    
+                </div>
+            </div> -->
+          

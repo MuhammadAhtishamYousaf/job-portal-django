@@ -1,0 +1,148 @@
+{% extends 'base.html'  %}
+{% load static %}
+ 
+    {% block 'title' %} Candidate Profile Page {% endblock  %}
+    {% block 'style' %} 
+    <style>
+     *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            width: auto;
+            height:100%;
+            background: aliceblue;
+            /* box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+            10px 10px 70px rgba(0,0,0,0.25),
+            inset 5px 5px 10px rgba(0,0,0,0.5),
+            inset 5px 5px 20px rgba(255,255,255,0.2),
+            inset -5px -5px 15px rgba(0, 0, 0, 0.75);  */
+            transition: 0.3s;
+            overflow-x: hidden;
+
+        }
+
+.profile-header {
+    background-color: #7fe7b3;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    clip-path: circle(50%);
+}
+
+.profile-nav ul {
+    list-style-type: none;
+    padding: 0;
+   
+}
+
+.profile-nav ul li {
+    display: inline;
+    margin-right: 10px;
+    
+}
+
+.profile-nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+.sections {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+   flex-direction: column;
+   flex-wrap: wrap;
+
+}
+
+.section {
+
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+    min-width: 50%;
+    /* background-color: rgb(255, 143, 143); */
+    background-color: rgb(132, 182, 226);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin:20px 20px
+}
+
+.section h2 {
+    /* border-bottom: 2px solid #333; */
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+
+
+    </style>
+
+    {% endblock %}
+
+    {% block 'content' %}
+  {% include "_messages.html" %}
+
+
+  
+    {% for user_detail in user_details %}  
+    <header class="profile-header">
+        
+        {% if user_detail.profile_img %}
+        <img src="/media/{{user_detail.profile_img}}" alt="Profile Picture" class="profile-picture"/>
+        {% else %}
+        <img src="https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_640.png" alt="profile Picture" class="profile-picture">
+        {% endif %}
+
+        {% comment %} {% if user %}
+         <h2> {{user.email}}</h2>
+        {% endif %} {% endcomment %}
+        <h2>[{{user_detail.specialization}} ]</h2>
+        <p><strong> Location:</strong> [{{user_detail.location }} ]</p>
+        <p> <strong> Gender:</strong> [{{ user_detail.gender }} ]</p>
+        <p><strong>  Phone:</strong> [{{user_detail.mobile_no}} ]</p>
+        
+    </header>
+  <div class="sections">
+    <section class="section" id="about">
+           <h2>About Me</h2>
+        <p>[{{user_detail.about_me}}]</p>
+    </section>
+
+    <section class="section" id="skills">
+        <h2>Skills</h2>
+        <p>[{{user_detail.skills}}]</p>
+        
+    </section>
+
+    <section class="section" id="education">
+        <h2>Education</h2>
+        <p>[{{user_detail.education}}]</p>
+        <p>University/Institution: [{{user_detail.university}}</p>
+    </section>
+
+    <section class="section" id="experience">
+        <h2>Priveus Job</h2>
+        <p>[{{user_detail.priveus_job}}]</p>
+          
+    </section>
+    <section class="section" id="interests">
+        <h2>Interests</h2>
+        <p>[{{user_detail.interests}}]</p>
+
+    </section>
+  </div>
+{% endfor %}
+
+    {% endblock  %}

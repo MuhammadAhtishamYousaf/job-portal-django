@@ -1,0 +1,357 @@
+{% extends 'base.html'  %}
+{% load static %}
+ 
+    {% block 'title' %}  Employer Registeration Form {% endblock  %}
+    {% block 'style' %} 
+    <style>
+     *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            width: auto;
+            height:100%;
+            background: white;
+
+        }
+
+        .container {
+            min-height: 300px;
+            position: relative;
+            min-width: 500px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 2% auto ;
+            color:black;
+            background-color: aliceblue;
+            font-weight: lighter;
+            box-shadow:1px 1px  3px 4px #ccc;
+
+
+        }
+         
+        .container header {
+            position:relative;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color:navy;
+            text-align: center;
+            
+        }
+        .container .benefits {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            text-align:center;
+            /* margin-left: 135px; */
+            margin-top: 10px;
+            color: lightslategray;
+        }
+        .container form {
+        background:aliceblue;
+          min-height: 400px;
+             position:relative; 
+            color:white;
+            margin-top: 1rem;
+        }
+        .container form  .fields {
+            display:inline ;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+            /* background-color: #4070f4; */  cursor: pointer;
+        }
+        .input-fields {
+         display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 2 - 15px);
+         margin:5px 5px;
+         justify-content: space-between;
+         color:black;
+         font-size: 1.1rem;
+     
+        }
+        .input-fields input {
+            cursor: pointer;
+            flex-wrap: wrap;
+            height: 40px;
+            border-radius: 4px;
+            /* border:1px solid black; */
+            border: none;
+            outline: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 0 15px;
+            /* color: white; */
+            background-color: transparent;
+            box-shadow: 0 0 5px 3px rgba(0,0,0,0.1);
+            transition: 0.3s;
+           
+        }
+        .input-fields input:hover{
+            border-bottom: 1px solid #4070f4;
+        }
+        .container .form {
+            color:aliceblue;
+            display: inline;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .container form button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 40px;
+            min-width: 200px ;
+            width:80%;
+            background-color: steelblue;
+            outline: none;
+            border: 2px solid white;
+            font-size: 1.5rem;
+            color: white;
+            margin: 15px auto;
+            border-radius: 5px;
+            transition: all 0.3s linear;
+            cursor: pointer; 
+            text-shadow: 1px 1px 10px white,
+            10px 0 60px  pink ,10px 0 100px dodgerblue,
+            0 0 100px rgb(255, 255, 255), 10px 0 100px darkblue; 
+        }
+
+      
+        form .button{
+            margin-right: 14px;
+        }
+       .helper-text {
+        font-size: 0.9rem;
+        color:black;
+       }
+       em{
+        margin-left: -5px;
+        font-size: 1.3rem;
+        color: rgb(241, 32, 17);
+       }
+       .checks {
+        line-height: 30px;
+        color: black;
+        font-size: 1rem;
+        font-weight: 400;
+
+       }
+        .checkbox {
+          padding:10px;
+          width: 15px;
+          height: 15px;
+
+       }
+
+ @media  screen and ( max-width: 700px)  {
+     .input-fields{
+        display:inline-flex;
+        flex-direction:column;
+        width:calc(100% / 1 - 16px);
+        margin:5px;
+        justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     }
+     .container{
+        min-width: 250px;
+        width: 100%;
+        margin:25px auto;
+        font-size: 0.8rem;
+     }
+     .container form button {
+        margin-left: 40px;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 2rem;
+     }
+
+ }
+ /* for mobiles */
+ @media  screen and (min-width=350px), ( max-width: 480px) {
+     .input-fields{
+        /* background-color: black; */
+        display:inline-flex;
+         flex-direction:column;
+         width:calc(100% / 1 - 16px);
+        margin:0px 0px;
+         justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 0.8rem;
+     }
+     .container{
+        overflow-x: hidden;
+      
+        min-width: 200px;
+        width: 100%;
+        margin:20px 0px;
+        font-size: 0.8rem;
+     }
+     .container form button {
+        margin-left: 40px;
+       font-size: 2rem;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 1.6rem;
+     }
+
+ }
+
+ @media  screen and ( max-width: 750px)  {
+    .input-fields{
+       display:inline-flex;
+        flex-direction:column;
+        width:calc(100% / 1 - 16px);
+        margin:5px;
+        justify-content: space-between;
+        color:cornflowerblue;
+        font-size: 1.3rem;
+     }
+     .container{
+        min-width: 300px;
+        width: 100%;
+        margin:25px auto;
+        font-size: 0.8rem;
+     }
+     .container form button {
+        margin-left: 40px;
+     }
+     .logo {
+      
+        margin-top: -5px;
+        font-size: 2rem;
+     }
+
+ }
+    </style>
+    {% endblock  %}
+
+{% block 'content' %}
+
+    <div class="container"> 
+        <header>Employer Registration</header>
+
+       
+        
+        <div class="benefits">
+        <p>  Post Unlimited Jobs</p>
+        <p>Access to Candidate's CV</p>
+        <p>Send Messages to Candidate</p>
+         <p>Free Registration for Employer</p>
+        </div>
+
+  {% include "_messages.html" %}
+
+            <form action=" {% url 'employer_registration' %}"  method = "POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="form"> 
+    
+                        <div class="fields">
+                                    <div class="input-fields">
+                                            <label for="">Your Full Name <em>*</em></label>
+                                            {{form_data.first_name}}
+                                            {% comment %} <input type="text" placeholder="Enter Your First Name" required> {% endcomment %}
+                                    </div>
+                                </div> 
+                        <div class="fields">
+                                    <div class="input-fields">
+                                            <label for="">Username<em>*</em></label>
+                                            {{form_data.username}}
+                                            {% comment %} <input type="text" placeholder="Enter Your First Name" required> {% endcomment %}
+                                    </div>
+                                </div> 
+                                {% comment %} <div class="fields">
+                                    <div class="input-fields">
+                                            <label for="">Industry <em>*</em></label>
+                                            <input type="text" placeholder="Enter Your First Name" required>
+                                    </div>
+                                </div>  {% endcomment %}
+
+                                <div class="fields">
+                                    <div class="input-fields">
+                                        <label for="">Company Name <em>*</em></label>
+                                            {% comment %} {{form_data.last_name}} {% endcomment %}
+
+                                        <input type="text" name="company" placeholder="Enter Your Company Name" required>
+                                    </div>
+                            </div> 
+                                {% comment %} <div class="fields">
+                                    <div class="input-fields">
+                                            <label for="">Contact No. <em>*</em></label>
+                                            <input type="number" placeholder=" Your Contact No." required>
+                                            <span class="helper-text">(Include your country code too)</span>
+                                    </div>
+                            </div> 
+                                {% endcomment %}
+                                {% comment %} <div class="fields">
+                                        <div class="input-fields">
+                                                <label for="">Location <em>*</em></label>
+                                                <input type="text" placeholder=" Your Location" required>
+                                        </div>
+                                </div> {% endcomment %}
+
+                                <div class="fields">
+                                    <div class="input-fields">
+                                        <label for="">Email <em>*</em></label>
+                                            {{form_data.email}}
+
+                                        {% comment %} <input type="email" placeholder=" Your birth Email " required> {% endcomment %}
+                                    </div>
+                            </div>
+
+                            <div class="fields">
+                                    <div class="input-fields">
+                                        <label for="">Password <em>*</em></label>
+                                            {{form_data.password1}}
+
+                                        {% comment %} <input type="password" placeholder=" Password" required> {% endcomment %}
+                                    </div>
+                            </div>
+                            
+                            <div class="fields">
+                                    <div class="input-fields">
+                                        <label for="">Confirm Password <em>*</em></label>
+                                            {{form_data.password2}}
+
+                                        {% comment %} <input type="password" placeholder=" Password" required> {% endcomment %}
+                                    </div>
+                            </div>
+                            <div class="checks">
+                                <input type="checkbox"  class="checkbox">
+                                <label for="remember">Subscribe to News letters</label><br>
+                                <input type="checkbox" checked class="checkbox">
+                                <label for="remember">I accept Terms of Use </label>
+                            </div>
+                        
+                                    <button type="submit" class="btn">Register</button> <br>
+                            
+                        <!-- <div class="fields">
+                            <div class="input-fields">
+                                <label for="">Gender  <em> *</em></label>
+                                <input type="text" placeholder=" Enter Your Gender" required>
+                            </div>
+                        </div>
+            
+                    <div >
+                        <label for="" class="cv-file">Your CV <em>*</em></label>
+                        <div  class="file">
+                            <input type="file" required>
+                        </div>
+                        </div> -->
+                </div>
+            </form>
+   </div>
+{% endblock %}

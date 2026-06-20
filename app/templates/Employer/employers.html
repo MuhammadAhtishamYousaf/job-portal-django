@@ -1,0 +1,149 @@
+{% extends 'base.html'  %}
+{% load static %}
+ 
+    {% block 'title' %}  Employers {% endblock  %}
+    {% block 'style' %} 
+    <style>
+     *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            width: auto;
+            height:100%;
+            background: white;
+            /* box-shadow: 25px 25px 75px rgba(0,0,0,0.25),
+            10px 10px 70px rgba(0,0,0,0.25),
+            inset 5px 5px 10px rgba(0,0,0,0.5),
+            inset 5px 5px 20px rgba(255,255,255,0.2),
+            inset -5px -5px 15px rgba(0, 0, 0, 0.75);  */
+            transition: 0.3s;
+            overflow-x: hidden;
+
+        }
+
+  .container {
+   
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  height: 100%;
+  position: relative;
+  justify-content:center ;
+  align-items: center;
+  flex-wrap: wrap;
+} 
+
+.profile-card {
+  width: calc(100%/3 - 15px);
+  width: 450px;
+  min-width: 300px;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: aliceblue;
+  box-shadow:1px 1px  3px 4px #ccc;
+  line-height: 25px;
+  color: black;
+  border-radius: 5px;
+  margin: 10px;
+  transition: all .5s ease-in-out;
+}
+
+
+.profile-card .profile-picture {
+  /* clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%); */
+    height: 150px;
+    margin-top:10px;
+    display: flex;
+    border-radius: 50%;
+}
+.profile-card a {
+  /* text-decoration: none; */
+  color:  darkblue
+}
+.profile-card .download-btn {
+ margin-top: 10px;
+  padding:10px;
+  height: 40px;
+  background-color: #4682B4;
+  border: 1px solid  rgb(233, 156, 13);
+  border-radius: 0%;
+  outline: none;
+  font-size: medium;
+  color:white;
+  /* box-shadow: 3px 4px 1px #eba50d; */
+ 
+  text-shadow: 1px 1px 10px white,
+    10px 0 60px  pink ,10px 0 100px dodgerblue,
+    0 0 100px rgb(255, 255, 255), 10px 0 100px darkblue; 
+
+}
+
+
+
+@media (max-width: 468px) {
+  .container {
+    width: 100%;
+ 
+  }
+  .profile-card  {
+    margin:10px;
+    height: auto;
+   text-align: center;
+  }
+  .container h4 {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
+  
+}
+.container p {
+  flex-wrap: wrap;
+  display: flex;
+  text-align: center;
+  line-height: -1px;
+}
+
+}
+    </style>
+{% endblock %}
+
+{% block 'content' %}
+
+   
+  {% include "_messages.html" %}
+          <div class="container">
+
+            {% for employer_detail in employer_details %}
+         
+            <div class="profile-card">
+                {% if employer_detail.company_logo %}
+                <img src="/media/{{employer_detail.company_logo}}  " alt="Company Logo" class="profile-picture">
+                {% else %}                
+                 <img src="https://www.designevo.com/res/templates/thumb_small/white-and-yellow-crown.webp" alt="" class="profile-picture">
+                {% endif %}
+                <p>{{ employer_detail.industry }}</p>
+          
+                <p>{{ employer_detail.company }}</p>
+               
+                
+                <!-- Add more fields as needed -->
+              <a href="{% url 'employer_profile_page' employer_detail.id %}">  <button class="download-btn"> Veiw Profile </button></a>
+
+            </div>
+         {% endfor %}
+        
+            
+        </div>
+
+<script>
+
+    
+</script>
+{% endblock  %}

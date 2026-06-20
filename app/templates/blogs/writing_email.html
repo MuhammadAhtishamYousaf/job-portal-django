@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Things You Should Know {% endblock  %}
+
+{% block 'style' %} 
+<style>
+*{
+  margin:0px;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+        
+}
+body {
+    width: 100%;
+    height:100%;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+    .container {
+      position: relative;
+      min-width: 400px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+      margin: 2% auto ;
+      color:black;
+      background-color: aliceblue;
+      /* border:1px solid gray; */
+      font-weight: lighter;
+      box-shadow:1px 1px  3px 4px #ccc;
+
+
+    } 
+    .content {
+      justify-content:center ;
+      align-items: center;
+      text-align:left;
+      flex-wrap: wrap;
+    }
+    .container .img{
+      height:300px;
+      width:500px;
+      margin:5% auto;
+      justify-content:center ;
+      text-align:center;
+      align-items: center;
+
+    }
+    .container p {
+      color:gray;
+      font-weight: lighter;
+    }
+    .container h2 {
+      font-weight:bold;
+    }
+    .container h3 {
+        font-weight: bold;
+    }
+    .container p .link {
+        text-decoration:none;
+        font-size: 1rem;
+        
+    } 
+  </style>
+{% endblock  %}
+
+{% block 'content' %}  
+
+<div class="container"> 
+  <div class="content">
+  <h2>Writing professional emails 101 </h2>
+
+  <img class="img" src="https://www.gulfjobs.com/uploads/blogs/getty_494741050_325316_434.jpg" alt="Image">
+   <p>AEffective communication is essential for achieving professional success not just in the United Arab 
+    Emirates but around the world, not to mention in nearly every aspect of life. It should come as no surprise 
+    that efficient writing emails are critical to achieving professional success in today's world, considering 
+    the amount of contact that takes place online these days. For startups, in particular, you may be given a 
+    great deal of responsibility from the beginning and be expected to contact external stakeholders and senior 
+    colleagues from the beginning of your tenure there.
+  </p>
+<br>
+So, what exactly constitutes an "effective" email? For the sake of this discussion, a successful email is one
+ that fulfills the goal for which it was written. The absolute least that should happen is that you will get a 
+ response. Beyond that, it should compel the receiver to do or seriously consider what you're asking them to 
+ do - whether it's putting your product marketing strategy into action, using your company's services, or simply 
+ meeting with you for coffee to discuss a business concept.
+<br>
+
+<h3>Authentic Subject Line</h3>
+<br>
+<p> We're all dealing with congested inboxes on a regular basis, so it's important to make it clear and
+     unambiguous what your message is about—especially in a business situation when you know the person who will 
+     be receiving your message is already crazy busy.
+
+
+
+</p> <br>
+ 
+ <br>
+<h3>Format your emails</h3>
+<br>
+<p>
+    Your emails will be brief and to the point in the majority of circumstances. Bullet points, bold, and italics
+     should be used in circumstances when an additional substance is required, such as the weekly email you send to 
+     fellows and a meeting summary for your manager or a stakeholder outside of your organization, among other things. 
+     Your message will be much simpler to understand as a result of this, and your major ideas and arguments will not
+      be lost in the process.
+</p><br>
+<p>
+    
+If you're attaching a report or presentation deck, add some bullet points in the body of the email to emphasize the 
+essential aspects of the report or presentation. This will guarantee that the recipient does not miss any of the most
+ important points, and it may even increase the likelihood that she will open and read the actual attachment itself.
+</p><br>
+<h3>Do not use informal language</h3>
+<br>
+<p>
+    It follows that you should completely avoid using shorthand and abbreviations such as LOL, OMG, and even Haha.
+     It is inappropriate to use them in business correspondence. In order to convey the same message, whole words 
+     such as "That's too hilarious!" and even a simple, "Wow!" should be used instead, which will come off as considerably 
+     more polished and professional.
+<br> <br>
+ 
+</div>
+</div>
+
+
+{% endblock  %}

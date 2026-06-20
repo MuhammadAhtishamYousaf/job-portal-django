@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}    Document{% endblock  %}
+{% block 'style' %} 
+     <style>
+     *{
+      margin:0px;
+      padding:0;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+      scroll-behavior: smooth;
+            
+        }
+        body {
+            width: 100%;
+            height:100%;
+            overflow-x: hidden;
+            background-color:  #7fe7b3;
+            /* background-image: url(https://images.pexels.com/photos/2825749/pexels-photo-2825749.jpeg?auto=compress&cs=tinysrgb&w=3000); */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+  .container {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    position: relative;
+    justify-content:center ;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #4682B4;
+} 
+
+
+.container .profile-card {
+  margin:10px ;
+  
+  max-width:200px;
+  min-width: 100px;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color:rgb(132, 182, 226);
+  border: 1px solid white;
+  color: black;
+  
+  border-radius: 9px;
+  /* box-shadow: 3px 3px  1px rgb(195, 195, 196),
+  1px 1px 3px  pink ,2px 2px 1px dodgerblue,
+  0 0 5px rgb(255, 255, 255), 1px 1px 5px darkblue; */
+
+}
+
+.profile-card .profile-picture {
+  /* clip-path: polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%); */
+    width: 100%;
+    height: 150px;
+    border-radius: 9px;
+    border-bottom-right-radius: 0;
+    display: flex;
+    border-bottom-left-radius: 30px;
+}
+.profile-card p{
+  padding:4px;
+  margin:3px;
+ 
+
+}
+.profile-card .download-btn {
+ 
+  padding:8px 15px;
+  margin-bottom: 5px;
+  background-color: #4682B4;
+  border:none;
+  outline: none;
+  font-size: medium;
+  color:white;
+  border-radius: 9px;
+  /* box-shadow: 3px 3px  1px rgb(245, 162, 7),
+  1px 1px 3px  pink ,2px 2px 1px dodgerblue,
+  0 0 5px rgb(255, 255, 255), 1px 1px 5px darkblue; */
+  
+}
+@media screen and  (max-width: 468px) {
+  .container {
+    width: 100%;
+ 
+  }
+  .profile-card  {
+    margin:10px;
+    height: auto;
+   text-align: center;
+  }
+
+.container .profile-card p {
+  flex-wrap: wrap;
+  display: flex;
+  text-align: center;
+ 
+}
+
+}
+    </style>
+{% endblock  %}
+
+{% block 'content' %}
+{% include "_messages.html" %}
+      <div class="container">
+             
+    
+
+            {% for user_detail in user_details %}
+            
+            <div class="profile-card">
+              {% if user_detail.profile_img %} 
+              <img src="/media/{{user_detail.profile_img}}" alt="Profile Picture" class="profile-picture"/>
+              {% else %}
+              <img src="https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_640.png" alt="Profile Picture" class="profile-picture">
+              
+              
+              {% endif %}
+                <p>{{ user_detail.specialization }}</p>
+                <p>{{ user_detail.location }}</p>
+                <p>{{ user_detail.skills }}</p>
+               
+                <br>
+               
+                <a href="{% url 'candidate_profile_page' user_detail.id %}"> <button class="download-btn">  Veiw Profile </button></a>
+                
+            </div>
+            
+         {% endfor %}
+        
+    </div>
+            {% endblock  %}
+
