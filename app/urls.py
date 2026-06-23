@@ -17,10 +17,10 @@ urlpatterns = [
     # path('reset_password/complete/',PasswordResetCompleteView.as_view(template_name='parmeen/password_reset_complete.html'), name='password_reset_complete'),
 
 
-    path('reset_password/', CustomPasswordResetView.as_view(template_name='parmeen/password_reset_form.html'), name='password_reset'),
-    path('reset_password/done/', PasswordResetDoneView.as_view(template_name='parmeen/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='parmeen/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset_password/complete/', PasswordResetCompleteView.as_view(template_name='parmeen/password_reset_complete.html'), name='password_reset_complete'),
+    path('reset_password/', CustomPasswordResetView.as_view(template_name='password_reset/password_reset_form.html'), name='password_reset'),
+    path('reset_password/done/', PasswordResetDoneView.as_view(template_name='password_reset/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='password_reset/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset_password/complete/', PasswordResetCompleteView.as_view(template_name='password_reset/password_reset_complete.html'), name='password_reset_complete'),
 
 
 

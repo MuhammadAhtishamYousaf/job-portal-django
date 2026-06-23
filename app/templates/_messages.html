@@ -1,35 +1,23 @@
-<style>
-    /* Success message */
-    .alert-success {
-       font-size: 1rem;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        height: 40px;
-        color: green;  /* Text color */
-    }
-    
-    /* Error message */
-    .alert-error {
-        font-size: 1rem;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        border-radius: 4px;
-        height: 40px;
-        color: red;  /* Text color */
-        
-    }
-
-</style>
 {% if messages %}
-            {% for message in messages %}
-          
-                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% endif %}">
-                    {{ message }}
-                </div> 
-                
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %} 
+
+{% if form_data and form_data.errors %}
+    <div class="form-errors" role="alert" aria-live="polite">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+            {% for field in form_data %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
             {% endfor %}
-        {% endif %}
+            {% for error in form_data.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

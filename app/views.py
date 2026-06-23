@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 import os
+from pprint import pprint
 # user authentication
 from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 
+from django.core.handlers.wsgi import WSGIRequest
 # user auth forms
 from django.contrib.auth.forms import UserCreationForm
 from .djangoForms.registration import BuiltinUserCreationForm,BuiltinEmployerCreationForm
@@ -18,6 +20,7 @@ from django.contrib.auth.models import User
 
 # flash messages
 from django.contrib import messages
+from django.db import transaction
 
 #  Custom forms
 from .djangoForms.job_posting import JobPostingForm
@@ -35,8 +38,8 @@ from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
 
 class CustomPasswordResetView(PasswordResetView):
-    html_email_template_name = 'parmeen/password_reset_email.html'
-    html_subject_template_name = 'parmeen/password_reset_subject.txt'
+    html_email_template_name = 'password_reset/password_reset_email.html'
+    html_subject_template_name = 'password_reset/password_reset_subject.txt'
     success_url = reverse_lazy('password_reset_done')
 
 
@@ -64,16 +67,18 @@ def search (request):
 def swiper (request):
     return render (request,'swiper.html')
 
-def home (request):
+def home(request):
     # return HttpResponse( 'working')
-   job_posting=JobPosting.objects.all()
-   if request.user.is_authenticated:
-      return  render (request , 'main.html',{'jobs':job_posting})
-   else:
-     messages.error(request,'Kindley login first!.')
-     return redirect ('candidate_login')
+    job_posting=JobPosting.objects.all()
+    
+    if request.user.is_authenticated:
+        return  render(request , 'main.html', {'jobs': job_posting})
+    
+    else:
+        
+        messages.error(request,'Kindley login first!')
+        return redirect(candidate_login)
  
-
 def Navbar(request):
     user = User.objects.get(id=request.user.id)
     
@@ -89,7 +94,6 @@ def AdminPanel (request):
  
 def swiper (request):
     return render (request,'swiper.html')
-
 
 def profile_page(request, id):
     # Try to retrieve the user
@@ -153,91 +157,94 @@ def profile_page(request, id):
     #     else:
     #         messages.error(request,'Please try again')
     #         return  HttpResponse (form.errors)
-def candidate_registration (request):
-    if request.method == 'GET':
-        form = BuiltinUserCreationForm()
-        return render(request, 'Candidate/registration.html', {'form_data': form})
+    
+    
+def candidate_registration(request: WSGIRequest):
+    if request.method == 'POST':
+        form = BuiltinUserCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                specialization = form.cleaned_data.get('specialization')
+                with transaction.atomic():
+                    user = form.save()
+                    UserDetails.objects.create(specialization=specialization, user=user, type=0)
+                messages.success(request, 'User registered successfully.')
+                return redirect('candidate_login')
+            except Exception:
+                messages.error(request, 'Something went wrong.')
     else:
-        form = BuiltinUserCreationForm(request.POST, request.FILES)
-        specialization= request.POST['specialization']
-        
-        if form.is_valid() and specialization:
-            user=form.save()
-            
-            edit_user= UserDetails (specialization=specialization,user=user,type=0)
-            edit_user.save()
-            messages.success(request, 'User registered successfully.')
-            # return HttpResponse (edit_user)
-            return redirect (candidate_login)
-        else:
-            messages.error(request, 'Please fill out the form correctly.')
-            return render(request, 'Candidate/registration.html', {'form_data': form})
+        form = BuiltinUserCreationForm()
 
+    return render(request, 'candidate/registration.html', {'form_data': form})
 
 def candidate_login(request):
+    
     if request.method == 'GET':
-        return render(request, 'Candidate/login.html')
-    else:
-        username = request.POST['username']
-        user_password = request.POST['password']
+        return render(request, 'candidate/login.html')
+  
+    username = request.POST.get('username')
+    user_password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=user_password)
+    user = authenticate(request, username=username, password=user_password)
 
-        if user is not None:
-            try:
-                user_details = UserDetails.objects.get(user=user)
-                if user_details.type == 0:
-                    login(request, user)
-                    messages.success(request, 'Logged In successfull!')
-                    return redirect('home')
-                else:
-                    messages.error(request, 'You are not registered as an candidate.')
-                    return redirect('candidate_login')
-                
-            except UserDetails.DoesNotExist:
-                messages.error(request, 'User account not associated with a user type. Please contact support.')
-                return redirect('candidate_login')
+    if user is not None:
+        
+        if user.is_superuser or user.is_staff:
+            login(request, user)
+            messages.success(request, "logged In succesfully!")
+            return redirect(home)
 
+        try:
+            user_details = UserDetails.objects.get(user = user)
+            if user_details.type == 0:
+                login(request, user)
+                messages.success(request, 'Logged In successfull!')
+                return redirect(home)
             
-        else:
-            messages.error(request, "Username or Password is incorrect")
+            else:
+                messages.error(request, 'You are not registered as an candidate.')
+                return redirect(candidate_login)
+            
+        except UserDetails.DoesNotExist as e:
+            messages.error(request, str(e))
             return redirect('candidate_login')
-            # return HttpResponse(user)
-        # return HttpResponse(request.POST)
+
+        
+    else:
+        messages.error(request, "Username or Password is incorrect")
+        return redirect(candidate_login)
+        # return HttpResponse(user)
+    # return HttpResponse(request.POST)
 
 def candidate_logout(request):
     logout(request)
     messages.success(request,"Logged out successfully!.")
     return redirect('candidate_login')
 
-
 def candidates (request):
     # users = User.objects.all()
     user_details = UserDetails.objects.all()
     #    return HttpResponse (users)
-    return render(request, 'Candidate/candidates.html',{'user_details':user_details})
+    return render(request, 'candidate/candidates.html',{'user_details':user_details})
 
 def candidate_profile_page (request,id):
     #  user=User.objects.get(id=id)
      try:  
         user_details = UserDetails.objects.filter(id=id)
         # user_details = UserDetails.objects.get(user_details=user_details)      
-        return render (request,'Candidate/candidate_profile_page.html',{'user_details':user_details})
+        return render (request,'candidate/candidate_profile_page.html',{'user_details':user_details})
 
      except:
         
     #     return HttpResponse ('except')
         return HttpResponse (user_details)
 
-
-
 def myprofile (request):
     # Get the currently logged-in user
     user = request.user
     # return HttpResponse (user)
-    return render(request, 'Candidate/myprofile.html', {'user': user})
+    return render(request, 'candidate/myprofile.html', {'user': user})
  
-
 def employer_registration(request):
     if request.method == 'GET':
         form = BuiltinEmployerCreationForm()
@@ -289,12 +296,8 @@ def employer_login(request):
             messages.error(request, "Username or Password is incorrect")
             return redirect('candidate_login') # Redirect back to the login page regardless of the error
 
-    
-    
-
 def about_us (request):
     return render (request, 'about_us.html')
-
 
 def terms_for_users (request):
     return render (request, 'terms_for_users.html')
@@ -321,7 +324,6 @@ def JobPosted(request):
     jobs=JobPosting.objects.all()
     return render (request,'ForAdmin/JobPosted.html',{'jobs':jobs})
 
-
 def full_job_profile (request):
 
     jobs = JobPosting.objects.all()
@@ -332,7 +334,6 @@ def privacy_and_policy(request):
 
 def things_you_should_know(request):
     return render (request,'blogs/things_you_should_know.html')
-
 
 def writing_resume(request):
     return render (request,'blogs/writing_resume.html')
@@ -346,19 +347,15 @@ def most_asked(request):
 def writing_email(request):
     return render (request,'blogs/writing_email.html')
 
-
 def user_dashboard (request):
     # return HttpResponse(request.user.is_authenticated)
     users = User.objects.all()
     return render(request,'ForAdmin/Users.html',{'users':users})
 
-
 def employers (request):
     #  employers=User.objects.all()
      employer_details=EmployerDetails.objects.all()
      return render (request, 'Employer/employers.html',{'employer_details':employer_details})
-
-
 
 def employer_profile_page (request,id):
     
@@ -372,20 +369,15 @@ def employer_profile_page (request,id):
     #     return HttpResponse ('except')
         return HttpResponse (employer_details)
      
-
-
 def employer_dashboard (request):
     employers = User.objects.all ()
     return render (request,'Employer/employer_dashboard.html',{'employers':employers})
-
-             
 
 def delete_user(request,id):
     user = User.objects.get(id=id)
     user.delete()
     messages.success(request,'User deleted Successfully!')
     return redirect('dashboard')
-
 
 def user_edit(request, id):
     try:
@@ -424,17 +416,14 @@ def user_edit(request, id):
         messages.error(request, 'No User Details Found!')
         return redirect('home')
 
-
 def Candidate_details(request):
    user_details=UserDetails.objects.all()
    return render (request,'ForAdmin/CandidateDetails.html',{'user_details':user_details})
- 
- 
+  
 def Employer_details(request):
    employer_details=EmployerDetails.objects.all()
    return render (request,'ForAdmin/EmployerDetails.html',{'employer_details':employer_details})
  
-
 def user_details_edit(request, id):
     # Retrieve the user based on the id
     user = User.objects.get(id=id)
@@ -513,8 +502,8 @@ def user_details_edit(request, id):
             messages.error(request, 'User details not found')
             return redirect('home')
         
-
 def change_password(request):
+    
     if request.user.is_authenticated:
         if request.method == 'GET':
             form = PasswordCustomChangeForm(request.user)

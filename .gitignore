@@ -9,6 +9,11 @@ __pycache__/
 .venv/
 venv/
 
+#vscode 
+.vscode/
+
+# environment vars
+.env
 
 # Cache / test files
 .pytest_cache/
@@ -27,3 +32,4 @@ BintoLayout.html
 navbar.html
 swiper.html
 virtualenv.txt
+superuser.txt

@@ -8,13 +8,15 @@ A simple Django-based job portal project for managing job-related pages and feat
 - Job portal structure with a custom app
 - Static and media file support
 - SQLite database
-- Development debugging with Django Debug Toolbar
 
 ## Tech Stack
 
 - Python
 - Django
 - SQLite
+- HTML
+- CSS
+- JavaScript
 - `uv`
 
 ## Setup
@@ -23,5 +25,5 @@ A simple Django-based job portal project for managing job-related pages and feat
 2. Create and activate the virtual environment:
 
 ```powershell
-uv venv .venv
-.\.venv\Scripts\Activate.ps1
+uv sync
+.venv\Scripts\Activate.ps1
