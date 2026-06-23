@@ -2,6 +2,7 @@
 
 A simple Django-based job portal project for managing job-related pages and features. The project uses Django for the backend, SQLite for the database, and `uv` for package management.
 
+Note: This is my institure project, now I am improving it to learn more.
 ## Features
 
 - Django web application
