@@ -37,6 +37,11 @@ class JobPosting (models.Model):
 #           return f' {self.id} -  {self.full_name} - {self.industry} - {self.email} - {self.contact_no} - {self.location} - {self.password}' 
      
 #    User Edit Form
+
+class UserType(models.IntegerChoices):
+    CANDIDATE = 0, "Candidate"
+    EMPLOYER = 1, "Employer"
+    
 class EmployerDetails (models.Model):
     company_logo = models.ImageField(null =True,upload_to='CompanyLogos' )
     industry =models.CharField (max_length =100,null=True)

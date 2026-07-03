@@ -1,5 +1,8 @@
+from urllib import request
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 import os
@@ -245,56 +248,74 @@ def myprofile (request):
     # return HttpResponse (user)
     return render(request, 'candidate/myprofile.html', {'user': user})
  
+ 
+
 def employer_registration(request):
-    if request.method == 'GET':
-        form = BuiltinEmployerCreationForm()
-        return render(request, 'Employer/registration.html', {'form_data': form})
-    else:
-        form = BuiltinEmployerCreationForm(request.POST, request.FILES)
-        company = request.POST.get('company')
+    if request.method == 'POST':
+        form = BuiltinEmployerCreationForm(request.POST)
         
-        if form.is_valid() and company:
-            user = form.save(commit=False)  # Get user instance without saving to database yet
-            user.save()  # Save user to database
+        if form.is_valid():
+            with transaction.atomic():
+                user = form.save()
+                company = form.cleaned_data.get('company')
+                EmployerDetails.objects.create(employer=user, company=company, type=1)
             
-            employer_details = EmployerDetails.objects.create(company=company, employer=user, type=1)
-            
-            messages.success(request, 'User registered successfully')
+            messages.success(request, 'Employer registered successfully.')
             return redirect('employer_login')
-        else:
-            messages.error(request, 'You did not follow the instructions')
-            return HttpResponse (form.errors)
-            return render(request, 'Employer/registration.html', {'form_data': form})       
-
-def employer_login(request):
-    if request.method == 'GET':
-        return render(request, 'Employer/login.html')
+                
     else:
-        username = request.POST['username']
-        employer_password = request.POST['password']
+        form = BuiltinEmployerCreationForm()
+        
+    return render(request, 'employer/registration.html', {'form_data': form})
 
-        employer = authenticate(request, username=username, password=employer_password)
 
-        if employer is not None:
-            try:
-                employer_details = EmployerDetails.objects.get(employer=employer)
-                if employer_details.type == 1:
-                   login(request, employer)
-                   messages.success(request, 'Logged In successfull!')
-                   return redirect('home')
-                else:
-                    messages.error(request, 'You are not registered as an candidate.')
-                    return redirect('candidate_login')
-            
-            except EmployerDetails.DoesNotExist:
-                messages.error(request, 'User account not associated with a user type. Please contact support.')
-                return redirect('employer_login')
-                # return HttpResponse (EmployerDetails.type)
+def check_registration_field(request):
+    field = request.GET.get('field')
+    value = request.GET.get('value', '').strip()
 
-           
-        else:
-            messages.error(request, "Username or Password is incorrect")
-            return redirect('candidate_login') # Redirect back to the login page regardless of the error
+    if not field or not value:
+        return JsonResponse({'exists': False})
+
+    if field == 'username':
+        exists = User.objects.filter(username__iexact=value).exists()
+    elif field == 'email':
+        exists = User.objects.filter(email__iexact=value).exists()
+    else:
+        return JsonResponse({'exists': False})
+
+    return JsonResponse({'exists': exists})
+
+def employer_login(request: WSGIRequest):
+    
+    if request.method == 'GET':
+        return render(request, 'employer/login.html')
+    
+    username = request.POST.get('username', '').strip()
+    employer_password = request.POST.get('password', '')
+    
+    employer = authenticate(request, username=username, password=employer_password)
+    
+    if employer is None:
+        messages.error(request, "Username or Password is incorrect")
+        return redirect('employer_login') # Redirect back to the login page regardless of the error
+        
+    if not (employer.is_staff or employer.is_superuser):
+        
+        try:
+            employer_details = EmployerDetails.objects.filter(employer=employer).first()
+        except EmployerDetails.DoesNotExist:
+            messages.error(request, 'Your account is not linked to an employer profile.')
+            return redirect('employer_login')
+        
+        if employer_details.type != 1:
+            messages.error(request, 'You are not registered as an employer.')
+            return redirect('employer_login')
+
+    login(request, employer)
+    messages.success(request, 'Logged In successfully!')
+    return redirect('home')
+
+
 
 def about_us (request):
     return render (request, 'about_us.html')
@@ -308,7 +329,7 @@ def contact_us(request):
 def job_posting(request):
     if request.method == "GET":
         jobs= JobPostingForm()
-        return render (request, 'Employer/job_posting.html',{'job_posting':jobs})
+        return render (request, 'employer/job_posting.html',{'job_posting':jobs})
     else:
         job_posting = JobPostingForm(request.POST,request.FILES)
         if job_posting.is_valid():

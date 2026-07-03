@@ -30,6 +30,7 @@ urlpatterns = [
     path('candidate_login/',views.candidate_login, name='candidate_login'),
     path('employer_registration/',views.employer_registration, name='employer_registration'),
     path('employer_login/',views.employer_login, name='employer_login'),
+    path('check-registration-field/', views.check_registration_field, name='check_registration_field'),
     path('about_us/',views.about_us, name='about_us'),
     path('terms_for_users/',views.terms_for_users, name='terms_for_users'),
     path('contact_us/',views.contact_us, name='contact_us'),
