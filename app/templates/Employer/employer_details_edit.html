@@ -1,246 +1,208 @@
-{% extends 'base.html'  %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block 'title' %} Employer Details Edit Form {% endblock  %}
-      {% block 'style' %}
-    <style>
-        *{
-            margin:0px;
-            padding:0;
-            box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
-            scroll-behavior: smooth;
-            
-        }
-        body {
-            width: 100%;
-            height:100%;
-           overflow-x: hidden;
-          background-color:white;
-        }
-   
-        .container {
-          
-            min-height: 300px;
-            position: relative;
-            min-width: 500px;
-            max-width: 600px;
-            width: 100%;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 2% auto ;
-            color:black;
-            background-color: aliceblue;
-            /* border:1px solid gray; */
-            font-weight: lighter;
-            box-shadow:1px 1px  3px 2px #ccc;
+{% block 'title' %}Employer Details Edit Form{% endblock %}
 
+{% block 'style' %}
+<style>
+    .registration-shell{
+        width: min(1200px, calc(100% - 24px));
+        margin: 24px auto 40px;
+        padding: 28px;
+        border-radius: 34px;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255, 122, 122, 0.38), transparent 18%),
+            linear-gradient(135deg, rgba(185,185,227,0.88), rgba(231,198,215,0.88), rgba(169,155,207,0.88));
+        box-shadow: 0 24px 54px rgba(84, 55, 99, 0.18);
+    }
 
-        }
-        .container .header {
-            position:relative;
-            font-size: 1.9rem;
-            font-weight: 600;
-            color:navy;
-            text-align: center;
-        }
-    
-        .container #form {
-            min-height: 400px;
-             position:relative; 
-            color:white;
-            margin-top: 1rem;
-        }
-        .container #form .title {
-            display: block;
-            margin-bottom:8px ;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: cornflowerblue; 
-            
-        }
-    
-        .container #form .fields {
-            display:inline ;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap;
-            /* background-color: #4070f4; */  cursor: pointer;
-        }
-        .input-fields {
-         display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 1 - 15px);
-         margin:5px 5px;
-         justify-content: space-between;
-        color: #333;
-        font-size: 1rem;
-     
-        }
-        .input-fields input {
+    .registration-heading{
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-            cursor: pointer;
-            flex-wrap: wrap;
-            border-radius: 4px;
-            /* border:1px solid black; */
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            font-weight: 400;
-            padding: 10px 15px;
-            color: gray;
-            background-color: transparent;
-            box-shadow:1px 1px  2px 2px #ccc;
+    .registration-heading h1{
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: #fff;
+        text-shadow: 0 10px 24px rgba(70, 44, 91, 0.18);
+    }
 
-            transition: 0.3s;
-           
-        }
-        .input-fields input:hover{
-            border-bottom: 1px solid #4070f4;
-        }
-     
-        
-        .container #form button{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            min-width: 200px ;
-            width:100%;
-            background-color: #4070f4;
-            outline: none;
-            border: none;
-            font-size: 1.5rem;
-            color: white;
-            margin: 25px 90px;
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            cursor: pointer;
-        }
-      
-        #form .buttons .backBtn:hover {
-            border: 1px solid #4070f4;
-            background-color: steelblue;
-        }
- 
-        #form .buttons {
-            display: flex;
-            align-items: center;
-        }
-        #form .buttons .backBtn{
-            margin-right: 14px;
-            
-        }
-       .helper-text {
-        font-size: 0.9rem;
-        color:black;
-       }
-       em{
-        margin-left: -5px;
-        font-size: 1.3rem;
-        color: rgb(241, 32, 17);
-       }
-   
-     
-@media  screen and ( max-width: 800px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 1 - 15px);
-         margin:5px 5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1rem;
-     }
+    .registration-heading p{
+        margin: 10px auto 0;
+        color: rgba(255,255,255,0.9);
+        line-height: 1.6;
+        max-width: 64ch;
+    }
 
-}
-
- @media  screen and ( max-width: 700px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 1 - 15px);
-         margin:5px 5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1rem;
-     }
-     .container{
-        min-width: 300px;
+    .container{
+        position: relative;
+        max-width: 760px;
         width: 100%;
-        margin:25px 10px;
-        font-size: 0.8rem;
-     }
-     .container #form button {
-        margin-left: 40px;
-     }
-     .logo {
-        margin-top: -5px;
-        font-size: 2rem;
-     }
+        margin: 0 auto;
+        padding: 28px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(142, 153, 204, 0.72), rgba(101, 90, 161, 0.55));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 28px 60px rgba(62, 42, 82, 0.18);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(14px);
+        color: #fff;
+    }
 
- }
- /* @media  screen and ( max-width: 900px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 2 - 16px);
-        margin:5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1.3rem;
-     }
- } */
-    </style>
-   {% endblock  %}
+    .container header{
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 18px;
+    }
 
-    {% block 'content' %}
+    .container form{
+        margin-top: 0;
+    }
+
+    .container form .fields{
+        display: inline;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .input-fields{
+        display: inline-flex;
+        flex-direction: column;
+        width: calc(100% / 1 - 15px);
+        margin: 8px 5px;
+        justify-content: space-between;
+        color: rgba(255,255,255,0.92);
+        font-size: 1rem;
+        vertical-align: top;
+    }
+
+    .input-fields label{
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: rgba(255,255,255,0.92);
+    }
+
+    .input-fields input,
+    .input-fields select{
+        height: 46px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
+        outline: none;
+        font-size: 0.98rem;
+        font-weight: 400;
+        padding: 0 14px;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-fields input::placeholder{
+        color: rgba(255,255,255,0.62);
+    }
+
+    .input-fields input:hover,
+    .input-fields input:focus,
+    .input-fields select:hover,
+    .input-fields select:focus{
+        border-color: rgba(255,255,255,0.45);
+        box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+    }
+
+    .helper-text{
+        font-size: 0.88rem;
+        color: rgba(255,255,255,0.75);
+        margin-top: 6px;
+    }
+
+    em{
+        margin-left: -4px;
+        font-size: 1.2rem;
+        color: #ffd1d8;
+        font-style: normal;
+    }
+
+    .container form button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: min(320px, 100%);
+        height: 46px;
+        margin: 22px auto 8px;
+        border: none;
+        border-radius: 999px;
+        background: #fff;
+        color: #1f1630;
+        font-size: 1.15rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 8px 18px rgba(255,255,255,0.18);
+    }
+
+    .container form button:hover{
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(255,255,255,0.24);
+    }
+
+    @media screen and (max-width: 750px){
+        .registration-shell{
+            width: calc(100% - 16px);
+            padding: 16px;
+        }
+
+        .input-fields{
+            width: calc(100% - 10px);
+            margin: 8px 5px;
+        }
+
+        .container{
+            width: 100%;
+            padding: 20px 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block 'content' %}
+<section class="registration-shell">
+    <div class="registration-heading">
+        <h1>Employer Details Edit</h1>
+        <p>Update your company profile so your hiring page stays accurate and ready for candidates.</p>
+    </div>
+
     <div class="container">
-        <header class="header"> Employer Details Edit Form</header>
+        <header>Employer Details Edit</header>
         {% include "_messages.html" %}
 
-        <form id="form" action="" method = "POST" enctype="multipart/form-data" >
+        <form id="form" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {% comment %} <div class="form first"> <span class="title">Personal Details</span>
-                    {% endcomment %}
-                <div class="details personal">
-                    
-                    <div class="fields">
-                          <div class="input-fields">
-                                <label for="">Industry <em>*</em></label>
-                                 {{ full_employer_details_form.industry }} 
-                                {% comment %} <input type="text" placeholder="Enter Your First Name" > {% endcomment %}
-                          </div>
-                    </div> 
 
-
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for=""> Company <em>*</em></label>
-                                {{ full_employer_details_form.company }} 
-                              {% comment %} <input type="email" placeholder=" Your birth Email " > {% endcomment %}
-                        </div>
-                   </div>
-
-                  <div class="fields">
-                        <div class="input-fields">
-                            <label for=""> Contact Number <em>*</em></label>
-                                {{ full_employer_details_form.contact_no }} 
-                            {% comment %} <input type="password" placeholder=" Password" > {% endcomment %}
-                        </div>
-                  </div>
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for=""> Location <em>*</em></label>
-                                 {{ full_employer_details_form.location }} 
-                              <!-- <input type="text" placeholder="Enter Your Nationality" > -->
-                        </div>
-                  </div>
-                     <div class="buttons">
-                            <button class="nextBtn">UPDATE</button>
-                    </div>
-                </div> 
+            <div class="input-fields">
+                <label>Industry <em>*</em></label>
+                {{ full_employer_details_form.industry }}
             </div>
+
+            <div class="input-fields">
+                <label>Company <em>*</em></label>
+                {{ full_employer_details_form.company }}
+            </div>
+
+            <div class="input-fields">
+                <label>Contact Number <em>*</em></label>
+                {{ full_employer_details_form.contact_no }}
+            </div>
+
+            <div class="input-fields">
+                <label>Location <em>*</em></label>
+                {{ full_employer_details_form.location }}
+            </div>
+
+            <button type="submit">UPDATE</button>
         </form>
     </div>
-{% endblock  %} 
+</section>
+{% endblock %}

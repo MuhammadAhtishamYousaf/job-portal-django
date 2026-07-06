@@ -1,0 +1,15 @@
+    # return all the details comming with reqeust
+    user = {
+        'id': request.user.id,
+        'username': request.user.username,
+        'email': request.user.email,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'is_staff': request.user.is_staff,
+        'is_superuser': request.user.is_superuser,
+        'is_authenticated': request.user.is_authenticated,
+        'method': request.method,
+        'path': request.path,
+        'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+        'ip_address': request.META.get('REMOTE_ADDR', ''),
+    }

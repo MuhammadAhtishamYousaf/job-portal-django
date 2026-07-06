@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}Companies Page{% endblock %}
+
+{% block 'style' %}
+    <link rel="stylesheet" href="{% static 'css/companies.css' %}">
+{% endblock %}
+
+{% block 'content' %}
+
+    <section class="companies-page" id="companies">
+        <div class="landing-section-heading">
+            <p class="section-kicker">Companies</p>
+            <h2>Featured companies</h2>
+            <p>Highlighted employers that users can quickly browse from the homepage.</p>
+        </div>
+        <div class="landing-card-grid">
+            <div class="landing-card">LOOKS</div>
+            <div class="landing-card">FeeEx</div>
+            <div class="landing-card">CORPORATE</div>
+            <div class="landing-card">COMPANY</div>
+        </div>
+    </section>
+
+{% endblock  %}

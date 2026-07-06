@@ -1,173 +1,237 @@
-{% extends 'base.html'  %}
-
+{% extends 'base.html' %}
 {% load static %}
 
-{% block 'title' %} Employer Login Form {% endblock  %}
+{% block 'title' %}Employer Login Form{% endblock %}
+
 {% block 'style' %}
-        <style>
-        *{
-            margin:0px;
-            padding:0;
-            box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
-            scroll-behavior: smooth;
-                
-            }
-            body {
-                width: 100%;
-                height:100%;
-                overflow-x: hidden;
-                background-color:white;
-                
-            }
-        
-        .container {
-            position: relative;
-            max-width: 500px;
-            border-radius: 16px;
-            padding: 30px;
-            margin:50px auto ;
-            border:1px solid #ccc;
-            background-color: aliceblue;
-            box-shadow: 0 0 5px 3px rgba(0,0,0,0.1);
-            filter:brightness(4px);
-            font-weight: lighter;
-        }
+<style>
+    .login-shell{
+        width: min(1200px, calc(100% - 24px));
+        margin: 24px auto 40px;
+        padding: 28px;
+        border-radius: 34px;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255, 122, 122, 0.38), transparent 18%),
+            linear-gradient(135deg, rgba(185,185,227,0.88), rgba(231,198,215,0.88), rgba(169,155,207,0.88));
+        box-shadow: 0 24px 54px rgba(84, 55, 99, 0.18);
+    }
 
-        .form-group {
+    .login-top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+    }
+
+    .login-heading h1{
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: #fff;
+        text-shadow: 0 10px 24px rgba(70, 44, 91, 0.18);
+    }
+
+    .login-heading p{
+        margin: 10px 0 0;
+        color: rgba(255,255,255,0.9);
+        line-height: 1.6;
+        max-width: 64ch;
+    }
+
+    .login-actions{
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .login-actions a{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        color: #1f1630;
+        background: #fff;
+        box-shadow: 0 10px 22px rgba(255,255,255,0.18);
+    }
+
+    .login-actions a.secondary{
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.28);
+        backdrop-filter: blur(8px);
+    }
+
+    .container{
+        position: relative;
+        max-width: 560px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(142, 153, 204, 0.72), rgba(101, 90, 161, 0.55));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 28px 60px rgba(62, 42, 82, 0.18);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(14px);
+        color: #fff;
+    }
+
+    .login-logo{
+        margin: 0 0 18px;
+        text-align: center;
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        color: #fff;
+        text-shadow: 0 10px 24px rgba(70, 44, 91, 0.18);
+    }
+
+    .form-group{
         margin-bottom: 20px;
-        }
+    }
 
-        form .form-group label {
+    .form-group label{
         display: block;
-        font-size: 1.1rem;
-        font-weight: lighter;
-        }
+        margin-bottom: 8px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.92);
+    }
 
-        form .form-group input {
+    .form-group input{
         display: flex;
         width: 100%;
-        min-width: 300px;
-        padding: 10px ;
-        border: none;
+        padding: 12px 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
         outline: none;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: transparent;
-        box-shadow: 0 0 5px 3px rgba(0,0,0,0.1);
+        font-size: 1rem;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
         transition: 0.3s;
-        }
-        .form-group input:hover {
-        background-color: white;
-        border-bottom:1px solid dodgerblue;
-        }
+    }
 
-        .form-group input:focus {
-        outline: none;
-        border-color: dodgerblue;
-        }
+    .form-group input::placeholder{
+        color: rgba(255,255,255,0.62);
+    }
 
-        form .btn {
+    .form-group input:hover,
+    .form-group input:focus{
+        border-color: rgba(255,255,255,0.45);
+    }
+
+    .checks{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255,255,255,0.9);
+        margin-top: 4px;
+    }
+
+    .btn{
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 40px;
-        min-width: 150px ;
-        width:100%;
-        background-color: steelblue;
-        outline: none;
-        border: none;
-        font-size: 1.5rem;
-        color: white;
-        margin: 25px auto;
-        border-radius: 5px;
-        transition: all 0.3s linear;
+        height: 46px;
+        width: 100%;
+        margin: 22px auto 16px;
+        border: 0;
+        border-radius: 999px;
+        background: #fff;
+        color: #1f1630;
+        font-size: 1.1rem;
+        font-weight: 800;
         cursor: pointer;
-        /* text-shadow: 1px 1px 10px white,
-        10px 0 60px  pink ,10px 0 100px dodgerblue,
-        0 0 100px rgb(255, 255, 255), 10px 0 100px darkblue; */
-        }
+        box-shadow: 0 10px 22px rgba(255,255,255,0.16);
+    }
 
+    .btn:hover{
+        background: rgba(255,255,255,0.88);
+    }
 
-        .btn:hover {
-        background:transparent;
-        border: 1px solid dodgerblue;
-        color:black;
-        }
-        .login-logo {
-        position:relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 2.5rem;
-        font-weight: lighter;
-        color:steelblue;
-        }
-        .forget-register {
+    .forget-register{
         display: flex;
         justify-content: space-between;
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin:3px;
-        width: 100%;
-        padding: 1px
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 1rem;
+        font-weight: 600;
+    }
 
-        }
-        .forget-register a {
+    .forget-register a{
         text-decoration: none;
+        color: #fff;
+    }
 
-        }
-        .forget-register a:hover {
-        color:steelblue;
+    .forget-register a:hover{
+        color: #f8fafc;
+        text-decoration: underline;
+    }
+
+    @media (max-width: 700px){
+        .login-shell{
+            width: calc(100% - 16px);
+            padding: 16px;
         }
 
-        @media screen and (max-width=400px) {
-        .container {
-            margin: 0.5rem;
-        }
-        
+        .login-top{
+            flex-direction: column;
+            align-items: stretch;
         }
 
-    </style>
-{% endblock  %}
+        .login-actions a{
+            width: 100%;
+        }
+
+        .container{
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block 'content' %}
+<section class="login-shell">
+    <div class="login-top">
+        <div class="login-heading">
+            <h1>Employer Login</h1>
+            <p>Continue with the same soft landing-page theme. If you are actually a candidate, use the quick switch button.</p>
+        </div>
+        
+    </div>
 
     <div class="container">
-
         <h1 class="login-logo">Employer Login</h1>
-
         {% include "_messages.html" %}
 
-        <form action = "{% url 'employer_login'%}" method = "POST">
-
+        <form action="{% url 'employer_login' %}" method="POST">
             {% csrf_token %}
 
             <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
             </div>
 
             <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
             <div class="checks">
                 <input type="checkbox" checked>
-                <label for="remember"> Remember me</label>
+                <label for="remember">Remember me</label>
             </div>
 
-            <button type="submit" class="btn">Login</button> <br>
+            <button type="submit" class="btn">Login</button>
 
             <div class="forget-register">
-
-                <span><a href='{% url "password_reset" %}'>Forget Password?</a></span>
-                <span><a href="{% url 'candidate_registration' %}">New Employer? Register</a></span>
-            
+                <span><a href="{% url 'password_reset' %}">Forget Password?</a></span>
+                <span><a href="{% url 'employer_registration' %}" data-auth-trigger="register">Register</a></span>
             </div>
         </form>
-
     </div>
+</section>
 {% endblock %}

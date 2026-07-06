@@ -1,103 +1,72 @@
-// function showSidebar(){
-//     const sidebar = document.querySelector('.menu')
-//         sidebar.style.display = 'flex' 
-//     }
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const drawer = document.querySelector('[data-nav-drawer]');
+  const authModal = document.querySelector('[data-auth-modal]');
+  const authTriggers = document.querySelectorAll('[data-auth-trigger]');
+  const authButtons = document.querySelectorAll('[data-auth-select]');
+  const authCloseButtons = document.querySelectorAll('[data-auth-close]');
 
-
-// function hideSidebar(){
-//         const sidebar= document.querySelector('.menu')
-//         sidebar.style.display = 'none'
-        
-//     }
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  let availableKeywords = [
-      'Web Developer',
-      'Cleaner',
-      'Designer',
-      'Front-End Developer',
-      'Python Programmer'
-  ];
-
-  const resultsBox = document.querySelector(".result-box");
-  const inputBox = document.querySelector(".search-input");
-
-  inputBox.addEventListener("keyup", function() {
-      let result = [];
-      let input = inputBox.value.trim().toLowerCase();
-      if (input.length) {
-          result = availableKeywords.filter(keyword => keyword.toLowerCase().includes(input));
-      }
-      console.log(result)
-      display(result);
-  });
-
-  function display(result) {
-      const content = result.map(list => "<li>" + list + "</li>").join('');
-      resultsBox.innerHTML = "<ul>" + content + "</ul>";
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const open = drawer.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
   }
-});
-    
-// Initialize Swiper
 
+  const authRoutes = {
+    register: {
+      candidate: '/candidate_registration/',
+      employer: '/employer_registration/',
+    },
+    login: {
+      candidate: '/candidate_login/',
+      employer: '/employer_login/',
+    },
+  };
 
+  let authMode = 'register';
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const filterSelects = document.querySelectorAll('.filter-select');
-//     const chosenCards = document.querySelector('.filter-chosen');
-
-//     filterSelects.forEach(function(filterSelect) {
-//         filterSelect.addEventListener('change', function() {
-//             const selectedOption = this.options[this.selectedIndex];
-//             const selectedOptionText = selectedOption.textContent;
-//             const selectedOptionValue = selectedOption.value;
-
-//             if (selectedOptionValue) {
-//                 const chosenCard = document.createElement('div');
-//                 chosenCard.classList.add('chosen-card');
-//                 chosenCard.textContent = selectedOptionText;
-
-//                 const closeIcon = document.createElement('i');
-//                 closeIcon.classList.add('fas', 'fa-times-circle');
-//                 chosenCard.appendChild(closeIcon);
-
-//                 closeIcon.addEventListener('click', function() {
-//                     chosenCard.remove();
-//                     filterSelect.selectedIndex = 0;
-//                 });
-
-//                 chosenCards.appendChild(chosenCard);
-//             }
-//         });
-//     });
-// });
-
-const filterSelects = document.querySelectorAll('.filter-select');
-const chosenCards = document.querySelector('.filter-chosen');
-
-filterSelects.forEach(filterSelect => {
-  filterSelect.addEventListener('change', () => {
-    const selectedOptions = Array.from(filterSelect.options)
-      .filter(option => option.selected && option.value !== "")
-      .map(option => option.textContent);
-
-    if (selectedOptions.length > 0) {
-      const newChosenCard = document.createElement('div');
-      newChosenCard.classList.add('chosen-card');
-      newChosenCard.textContent = selectedOptions.join(', ');
-
-      const closeIcon = document.createElement('i');
-      closeIcon.classList.add('fas', 'fa-times-circle');
-      newChosenCard.appendChild(closeIcon);
-
-      closeIcon.addEventListener('click', () => {
-        newChosenCard.remove();
-        filterSelect.selectedIndex = 0;  // Reset the select dropdown
-      });
-
-      chosenCards.appendChild(newChosenCard);
+  const openAuthModal = (mode) => {
+    authMode = mode || 'register';
+    if (authModal) {
+      authModal.hidden = false;
     }
+  };
+
+  const closeAuthModal = () => {
+    if (authModal) {
+      authModal.hidden = true;
+    }
+  };
+
+  authTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      openAuthModal(trigger.dataset.authTrigger);
+    });
   });
+
+  authButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const role = button.dataset.authSelect;
+      const target = authRoutes[authMode]?.[role];
+      if (target) {
+        window.location.href = target;
+      }
+    });
+  });
+
+  authCloseButtons.forEach((button) => {
+    button.addEventListener('click', closeAuthModal);
+  });
+
+  if (authModal) {
+    authModal.addEventListener('click', (event) => {
+      if (event.target === authModal) {
+        closeAuthModal();
+      }
+    });
+  }
 });
 

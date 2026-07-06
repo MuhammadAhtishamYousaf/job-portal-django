@@ -1,0 +1,89 @@
+/* #################### Companies Page #################### */
+.companies-page{
+    width: min(1200px, calc(100% - 24px));
+    margin: 24px auto 40px;
+    padding: 32px;
+    border-radius: 32px;
+    background:
+        radial-gradient(circle at 30% 35%, rgba(255, 122, 122, 0.35), transparent 18%),
+        linear-gradient(135deg, rgba(185,185,227,0.82), rgba(231,198,215,0.82), rgba(169,155,207,0.82));
+    box-shadow: 0 24px 54px rgba(84, 55, 99, 0.18);
+}
+
+.landing-section-heading{
+    max-width: 760px;
+    margin: 0 auto 22px;
+    text-align: center;
+}
+
+.section-kicker{
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: .8rem;
+    font-weight: 800;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.landing-section-heading h2{
+    margin: 0;
+    font-size: clamp(1.9rem, 3vw, 2.8rem);
+    color: #fff;
+    text-shadow: 0 10px 24px rgba(70, 44, 91, 0.2);
+}
+
+.landing-section-heading p{
+    margin: 10px 0 0;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.65;
+}
+
+.landing-card-grid{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.landing-card{
+    min-height: 180px;
+    border-radius: 22px;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 12px 24px rgba(91, 63, 109, 0.08);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: .06em;
+    color: #2d1f44;
+}
+
+.landing-card:hover{
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+@media (max-width: 900px){
+    .companies-page{
+        padding: 20px;
+    }
+
+    .landing-card-grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px){
+    .companies-page{
+        width: calc(100% - 16px);
+        padding: 18px;
+    }
+
+    .landing-card-grid{
+        grid-template-columns: 1fr;
+    }
+}

@@ -73,7 +73,7 @@ class UserDetails(models.Model):
     about_me = models.TextField(blank=True, null=True)
     skills = models.CharField(max_length=200, blank=True, null=True)
     education = models.CharField(max_length=255, blank=True, null=True)
-    profile_img = models.ImageField(blank=True, null=True, upload_to='UserDetails')
+    profile_img = models.ImageField(blank=True, null=True, upload_to='user_profiles/')
     university = models.CharField(max_length=66, blank=True, null=True)
     priveus_job = models.CharField(max_length=70, blank=True, null=True)
     specialization = models.CharField(max_length=200, blank=True, null=True)

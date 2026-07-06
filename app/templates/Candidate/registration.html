@@ -7,220 +7,255 @@
 {% block 'style' %}
     
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing: border-box;
-        font-family: 'Nunito', sans-serif;
-        scroll-behavior: smooth;
-        
-        
+    .registration-shell{
+        width: min(1200px, calc(100% - 24px));
+        margin: 24px auto 40px;
+        padding: 28px;
+        border-radius: 34px;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255, 122, 122, 0.38), transparent 18%),
+            linear-gradient(135deg, rgba(185,185,227,0.88), rgba(231,198,215,0.88), rgba(169,155,207,0.88));
+        box-shadow: 0 24px 54px rgba(84, 55, 99, 0.18);
+        color: #fff;
     }
-    body {
-        width: 100%;
-        height: 100vh;
-        overflow-x: hidden;
 
-        justify-content: center;
+    .registration-top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
     }
+
+    .registration-heading h1{
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        text-shadow: 0 10px 24px rgba(70, 44, 91, 0.18);
+    }
+
+    .registration-heading p{
+        margin: 10px 0 0;
+        color: rgba(255,255,255,0.9);
+        line-height: 1.6;
+        max-width: 64ch;
+    }
+
+    .registration-actions{
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .registration-actions a{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        color: #1f1630;
+        background: #fff;
+        box-shadow: 0 10px 22px rgba(255,255,255,0.18);
+    }
+
+    .registration-actions a.secondary{
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.28);
+        backdrop-filter: blur(8px);
+    }
+
     .container {
         min-height: 300px;
         position: relative;
-        min-width: 500px;
-        max-width: 600px;
         width: 100%;
-        border-radius: 16px;
-        padding: 30px;
-        margin: 2% auto ;
-        color:black;
-        background-color: aliceblue;
-        /* border:1px solid gray; */
-        font-weight: lighter;
-        box-shadow:1px 1px  3px 4px #ccc;
-
+        max-width: 760px;
+        margin: 0 auto;
+        border-radius: 28px;
+        padding: 28px;
+        color: #fff;
+        background: linear-gradient(135deg, rgba(142, 153, 204, 0.72), rgba(101, 90, 161, 0.55));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 28px 60px rgba(62, 42, 82, 0.18);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(14px);
     }
-    .container .header {
-        position:relative;
-        font-size: 1.9rem;
-        font-weight: 600;
-        
+
+    .container .header{
+        position: relative;
+        font-size: 1.8rem;
+        font-weight: 700;
         text-align: center;
-    }
-    .container #form {
-        /* background-color: #155724; */
-        min-height: 400px;
-        position:relative; 
-        color: black;
-        
-    }
-    .container #form .title {
-        display: block;
-        margin-bottom:8px ;
-        
+        margin-bottom: 18px;
     }
 
-    .container #form .fields {
-        display:inline ;
+    .container #form{
+        min-height: 400px;
+        position: relative;
+        color: #fff;
+    }
+
+    .container #form .title{
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .container #form .fields{
+        display: inline;
         flex-direction: column;
         align-items: center;
         flex-wrap: wrap;
         cursor: pointer;
     }
-    .input-fields {
-        display:inline-flex;
-        flex-direction:column;
-        width:calc(100% / 2 - 15px);
-        margin:5px 5px;
-        justify-content: space-between;
-    
-    }
-    .input-fields input {
 
+    .input-fields{
+        display: inline-flex;
+        flex-direction: column;
+        width: calc(100% / 2 - 15px);
+        margin: 5px 5px;
+        justify-content: space-between;
+        color: rgba(255,255,255,0.92);
+    }
+
+    .input-fields input,
+    .input-fields select,
+    .input-fields textarea{
         cursor: pointer;
         flex-wrap: wrap;
-    
-        border-radius: 4px;
-        border: none;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
         outline: none;
         font-size: 1rem;
         font-weight: 400;
-        padding: 10px 15px;
-        
-        background-color: transparent;
-        box-shadow: 0 0 5px 3px rgba(0,0,0,0.1);
-
+        padding: 12px 15px;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
         transition: 0.3s;
-        
     }
-    .input-fields input:hover{
-        border-bottom: 1px solid #4070f4;
-        
+
+    .input-fields input::placeholder,
+    .input-fields textarea::placeholder{
+        color: rgba(255,255,255,0.62);
     }
-    .field-error {
+
+    .input-fields input:hover,
+    .input-fields select:hover,
+    .input-fields textarea:hover{
+        border-color: rgba(255,255,255,0.45);
+    }
+
+    .field-error{
         margin-top: 6px;
-        color: #b00020;
+        color: #ffe4e6;
         font-size: 0.92rem;
     }
-    
-    .file {
-            width:calc(100% / 1 - 16px);
-        height: 40px;
-        border: 1px solid black;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        margin:0px 8px 0px 7px;
-        border-radius: 4px;
-        padding: 0 15px;
-        box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
+
+    .helper-text{
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.75);
     }
-    .cv-file {
+
+    em{
+        margin-left: -5px;
         font-size: 1.3rem;
-        font-weight: 400;
-        
-    }
-    .ins-uni {
-        display:flex;
-        flex-direction:column;
-        width:calc(100% / 1 - 16px);
-        margin:5px 5px;
-        justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1.3rem;
-    }
-    .ins-uni input {
-        cursor: pointer;
-        flex-wrap: wrap;
-        height: 40px;
-        border-radius: 4px;
-        border:1px solid black;
-        outline: none;
-        font-size: 1rem;
-        font-weight: 400;
-        padding: 0 15px;
-        /* color: white; */
-        background-color: transparent;
-        box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
-    
+        color: #ffd1d8;
     }
 
     .container #form button{
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 40px;
-        min-width: 200px ;
-        width:100%;
-        background-color:steelblue;
+        height: 44px;
+        min-width: 160px;
+        background: #fff;
         outline: none;
-        border: 2px solid white;
-        font-size: 1.5rem;
-        color: white;
-        margin: 25px 90px;
-        border-radius: 5px;
+        border: 0;
+        font-size: 1.05rem;
+        color: #1f1630;
+        margin: 18px 12px 0 0;
+        border-radius: 999px;
         transition: all 0.3s linear;
         cursor: pointer;
+        box-shadow: 0 10px 22px rgba(255,255,255,0.16);
     }
-    
-    
 
-    #form .buttons {
+    .form-link-button{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        min-width: 160px;
+        padding: 0 20px;
+        border-radius: 999px;
+        text-decoration: none;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.24);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(62, 42, 82, 0.14);
+    }
+
+    #form .buttons{
         display: flex;
         align-items: center;
-    }
-    #form .buttons .backBtn{
-        margin-right: 14px;
+        justify-content: center;
+        margin-top: 16px;
         
     }
-    .helper-text {
-    font-size: 0.9rem;
-    color:gray;
+    #form .buttons .nextBtn{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        min-width: 50%;
+        padding: 0 20px;
+        border-radius: 999px;
+        text-decoration: none;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.24);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(62, 42, 82, 0.14);
     }
-    em{
-        margin-left: -5px;
-        font-size: 1.3rem;
-        color: rgb(241, 32, 17);
-    }
-    @media  screen and ( max-width: 800px)  {
-        .input-fields{
-            display:inline-flex;
-            flex-direction:column;
-            width:calc(100% / 1 - 15px);
-            margin:5px 5px;
-            justify-content: space-between;
-            color:cornflowerblue;
-            font-size: 1rem;
-        }
-
+    #form .buttons button:hover{
+        background: #f8fafc;
+        color: #1f2937;
     }
 
-    @media  screen and ( max-width: 700px)  {
+
+    @media screen and (max-width: 800px){
         .input-fields{
-            display:inline-flex;
-            flex-direction:column;
-            width:calc(100% / 1 - 15px);
-            margin:5px 5px;
+            display: inline-flex;
+            flex-direction: column;
+            width: calc(100% / 1 - 15px);
+            margin: 5px 5px;
             justify-content: space-between;
-            color:cornflowerblue;
             font-size: 1rem;
         }
+    }
+
+    @media screen and (max-width: 700px){
+        .registration-shell{
+            width: calc(100% - 16px);
+            padding: 16px;
+        }
+
         .container{
-            min-width: 300px;
             width: 100%;
-            margin:25px 10px;
-            font-size: 0.8rem;
-        }
-        .container #form button {
-            margin-left: 40px;
-        }
-        .logo {
-        
-            margin-top: -5px;
-            font-size: 2rem;
+            margin: 0 auto;
+            padding: 20px;
+            font-size: 0.9rem;
         }
 
+        .registration-top{
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .registration-actions a{
+            width: 100%;
+        }
     }
 
 </style>
@@ -228,6 +263,15 @@
 
 
 {% block 'content' %}
+
+<section class="registration-shell">
+    <div class="registration-top">
+        <div class="registration-heading">
+            <h1>Candidate Registration</h1>
+            <p>Join the portal with the same soft, polished theme used across the home page. If you are an employer or already have an account, use the quick links here.</p>
+        </div>
+        
+    </div>
 
 <div class="container">
 
@@ -336,7 +380,9 @@
                 {% endif %}
 
                     <div class="buttons">
-                        <button class="nextBtn">Register</button>
+                        {% comment %} <a href="{% url 'candidate_registration' %}" class="form-link-button" data-auth-trigger="register">Employer</a> {% endcomment %}
+                        <button type="submit" class="nextBtn">Register</button>
+                        {% comment %} <a href="{% url 'candidate_login' %}" class="form-link-button" data-auth-trigger="login">Login</a> {% endcomment %}
                     </div>
                 </div>
 
@@ -345,6 +391,7 @@
     </form> 
     
 </div>
+</section>
 {% endblock  %}
 
 <!--  

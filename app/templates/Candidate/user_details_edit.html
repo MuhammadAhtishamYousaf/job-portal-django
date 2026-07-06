@@ -1,422 +1,504 @@
- {% extends 'base.html'  %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block 'title' %}User Details Edit Form {% endblock  %}
-      {% block 'style' %}
-    <style>
-        *{
-            margin:0px;
-            padding:0;
-            box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
-            scroll-behavior: smooth;
-            
-        }
-        body {
-            width: 100%;
-            height:100%;
-           overflow-x: hidden;
-          background-color: white;
-        }
-   
-        .container {
-          
-            position: relative;
-            min-width: 500px;
-            max-width:800px;
-            width: 100%;
-            border-radius: 16px;
-            padding: 30px;
-            margin:50px auto ;
-            background-color: aliceblue;
-            box-shadow:1px 1px  3px 2px #ccc;
-          
-        }
-        .container .header {
-            position:relative;
-            font-size: 1.9rem;
-            font-weight: 600;
-            color:navy;
-            text-align: center;
-        }
-        /* .container header::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            height: 5px;
-            width:28px;
-            border-radius: 9px;
-            background: cornflowerblue;
-        } */
-        .container #form {
-            min-height: 500px;
-            position:relative; 
-            color:white;
-            margin-top: 1rem;
-        }
-        .container #form .title {
-            display: block;
-            margin-bottom:8px ;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: cornflowerblue; 
-            
-        }
-    
-        .container #form .fields {
-            display:inline ;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap;
-            /* background-color: #4070f4; */  cursor: pointer;
-        }
-        .input-fields {
-        display:inline-flex;
-        flex-direction:column;
-        width:calc(100% / 2 - 15px);
-        margin:5px 5px;
+{% block 'title' %}User Details Edit Form{% endblock %}
+
+{% block 'style' %}
+<style>
+    .registration-shell{
+        width: min(1200px, calc(100% - 24px));
+        margin: 24px auto 40px;
+        padding: 28px;
+        border-radius: 34px;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255, 122, 122, 0.38), transparent 18%),
+            linear-gradient(135deg, rgba(185,185,227,0.88), rgba(231,198,215,0.88), rgba(169,155,207,0.88));
+        box-shadow: 0 24px 54px rgba(84, 55, 99, 0.18);
+        color: #fff;
+    }
+
+    .registration-top{
+        display: flex;
+        align-items: center;
         justify-content: space-between;
-        color:black;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+    }
+
+    .registration-heading h1{
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        text-shadow: 0 10px 24px rgba(70, 44, 91, 0.18);
+    }
+
+    .registration-heading p{
+        margin: 10px 0 0;
+        color: rgba(255,255,255,0.9);
+        line-height: 1.6;
+        max-width: 64ch;
+    }
+
+    .container {
+        position: relative;
+        max-width: 760px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(142, 153, 204, 0.72), rgba(101, 90, 161, 0.55));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 28px 60px rgba(62, 42, 82, 0.18);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(14px);
+        color: #fff;
+    }
+
+    .container .header{
+        position: relative;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
+    .container #form{
+        min-height: 400px;
+        position: relative;
+        color: #fff;
+    }
+
+    .container #form .fields{
+        display: inline;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+        cursor: pointer;
+    }
+
+    .input-fields{
+        display: inline-flex;
+        flex-direction: column;
+        width: calc(100% / 2 - 15px);
+        margin: 5px 5px;
+        justify-content: space-between;
+        color: rgba(255,255,255,0.92);
+    }
+
+    .input-fields label,
+    .cv-file,
+    .ins-uni label{
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: rgba(255,255,255,0.92);
+    }
+
+    .input-fields input,
+    .input-fields select,
+    .input-fields textarea,
+    .ins-uni input,
+    .container #form textarea,
+    .file{
+        cursor: pointer;
+        flex-wrap: wrap;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.22);
+        outline: none;
         font-size: 1rem;
-     
-        }
-        .input-fields input {
+        font-weight: 400;
+        padding: 12px 15px;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+        transition: 0.3s;
+    }
 
-            cursor: pointer;
-            flex-wrap: wrap;
-            height: 40px;
-            border-radius: 4px;
-            /* border:1px solid black; */
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            font-weight: 400;
-            padding: 0 15px;
-            color: gray;
-            background-color: transparent;
-            box-shadow:1px 1px  2px 2px #ccc;
-            transition: 0.3s;
-           
-        }
-        .input-fields input:hover{
-            border-bottom: 1px solid #4070f4;
-        }
-     
-        .file {
-              width:calc(100% / 1 - 16px);
-            height: 100px;
-            border: 1px solid black;
-            justify-content: center;
-            align-items: flex-start;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            margin:0px 8px 0px 7px;
-            border-radius: 4px;
-            padding: 0 15px;
-            box-shadow: 0 0 70px 90px rgba(0,0,0,0.1);
-            color:black;
-        }
-        .cv-file {
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: cornflowerblue; 
-        }
-        .ins-uni {
-            display:flex;
-           flex-direction:column;
-           width:calc(100% / 1 - 16px);
-           margin:5px 5px;
-           justify-content: space-between;
-           color:black;
-           font-size: 1rem;
-        }
-        .ins-uni input {
-            cursor: pointer;
-            flex-wrap: wrap;
-            height: 40px;
-            border-radius: 4px;
-            border:1px solid gray;
-            outline: none;
-            font-size: 1rem;
-            font-weight: 400;
-            padding: 0 15px;
-            color: gray;
-            background-color: transparent;
-            box-shadow: 0 0 2px 3px rgba(0,0,0,0.1);
-     
-        }
+    .input-fields input::placeholder,
+    .input-fields textarea::placeholder,
+    .container #form textarea::placeholder{
+        color: rgba(255,255,255,0.62);
+    }
 
-        .container #form button{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            min-width: 200px ;
-            width:100%;
-            background-color:steelblue;
-            outline: none;
-            border: 2px solid white;
-            font-size: 1.5rem;
-            color: white;
-            margin: 25px 90px;
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            cursor: pointer;
-        }
-      
-        
- 
-        #form .buttons {
-            display: flex;
-            align-items: center;
-        }
-        #form .buttons .backBtn{
-            margin-right: 14px;
-            
-        }
-       .helper-text {
+    .input-fields input:hover,
+    .input-fields select:hover,
+    .input-fields textarea:hover,
+    .ins-uni input:hover,
+    .container #form textarea:hover{
+        border-color: rgba(255,255,255,0.45);
+    }
+
+    .file{
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .dropzone{
+        display: grid;
+        gap: 10px;
+        place-items: center;
+        min-height: 180px;
+        padding: 18px;
+        border-radius: 20px;
+        border: 1.5px dashed rgba(255,255,255,0.38);
+        background: rgba(255,255,255,0.08);
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .dropzone:hover,
+    .dropzone.is-dragover{
+        border-color: rgba(255,255,255,0.7);
+        background: rgba(255,255,255,0.14);
+        transform: translateY(-1px);
+    }
+
+    .dropzone__title{
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .dropzone__hint{
+        color: rgba(255,255,255,0.8);
+        font-size: 0.92rem;
+    }
+
+    .dropzone__preview{
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: none;
+        border: 2px solid rgba(255,255,255,0.55);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+    }
+
+    .file input{
+        width: 100%;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .helper-text{
         font-size: 0.9rem;
-        color:black;
-       }
-       em{
+        color: rgba(255,255,255,0.75);
+        margin-top: 6px;
+    }
+
+    .field-error{
+        margin-top: 6px;
+        font-size: 0.92rem;
+        color: #e4000f;
+    }
+
+    em{
         margin-left: -5px;
         font-size: 1.3rem;
-        color: rgb(241, 32, 17);
-       }
-       .container #form textarea {
-            cursor: pointer;
-            flex-wrap: wrap;
-            height: 40px;
-            border-radius: 4px;
-            border:1px solid gray;
-            outline: none;
-            font-size: 1rem;
-            font-weight: 400;
-            padding: 0 15px;
-            /* color: white; */
-            background-color: transparent;
-            display:inline-flex;
-           flex-direction:column;
-            resize: vertical;
-            justify-content: space-between;
-            color:gray;
-       }
+        color: #64000f;
+        font-style: normal;
+    }
 
-     
-@media  screen and ( max-width: 800px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 1 - 15px);
-         margin:5px 5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1rem;
-     }
+    .ins-uni{
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 10px);
+        margin: 5px 5px;
+        justify-content: space-between;
+        color: rgba(255,255,255,0.92);
+    }
 
-}
-
-
- @media  screen and ( max-width: 700px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 1 - 15px);
-         margin:5px 5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1rem;
-     }
-     .container{
-        min-width: 300px;
+    .container #form button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        min-width: 160px;
         width: 100%;
-        margin:25px 10px;
-        font-size: 0.8rem;
-     }
-     .container #form button {
-        margin-left: 40px;
-     }
-     .logo {
-      
-        margin-top: -5px;
-        font-size: 2rem;
-     }
+        background: #fff;
+        outline: none;
+        border: 0;
+        font-size: 1.05rem;
+        color: #1f1630;
+        margin: 18px 0 0 0;
+        border-radius: 999px;
+        transition: all 0.3s linear;
+        cursor: pointer;
+        box-shadow: 0 10px 22px rgba(255,255,255,0.16);
+    }
 
- }
- /* @media  screen and ( max-width: 900px)  {
-     .input-fields{
-        display:inline-flex;
-         flex-direction:column;
-         width:calc(100% / 2 - 16px);
-        margin:5px;
-         justify-content: space-between;
-        color:cornflowerblue;
-        font-size: 1.3rem;
-     }
- } */
-    </style>
-   {% endblock  %}
+    .container #form button:hover{
+        background: #f8fafc;
+        color: #1f2937;
+    }
 
-    {% block 'content' %}
+    #form .buttons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 16px;
+    }
+
+    @media screen and (max-width: 800px){
+        .input-fields{
+            display: inline-flex;
+            flex-direction: column;
+            width: calc(100% / 1 - 15px);
+            margin: 5px 5px;
+            justify-content: space-between;
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 700px){
+        .registration-shell{
+            width: calc(100% - 16px);
+            padding: 16px;
+        }
+
+        .container{
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        .registration-top{
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block 'content' %}
+<section class="registration-shell">
+    <div class="registration-top">
+        <div class="registration-heading">
+            <h1>Candidate Details Edit</h1>
+            <p>Update your candidate profile with the same soft, polished theme used on the registration page.</p>
+        </div>
+    </div>
+
     <div class="container">
-        <header class="header">User Details Edit Form</header>
-        {% include "_messages.html" %}
+        <header class="header">Edit Profile</header>
+        {% comment %} {% include "_messages.html" %} {% endcomment %}
 
-        <form id="form" action="" method = "POST" enctype="multipart/form-data" >
+        <form id="form" action="{% url 'candidate_profile_edit'%}" method="POST" enctype="multipart/form-data" novalidate>
+
             {% csrf_token %}
-                  
-                    <div class="fields">
-                          <div class="input-fields">
-                                <label for="">Location <em>*</em></label>
-                                 {{ full_user_details_form.location }} 
-                                {% comment %} <input type="text" placeholder="Enter Your First Name" > {% endcomment %}
-                          </div>
-                    </div> 
-
-                    {% comment %} <div class="fields">
-                        <div class="input-fields">
-                              <label for=""> Joining Date <em>*</em></label>
-                                {{ full_user_details_form.joining_date }} {% endcomment %}
-                              {% comment %} <input type="text" placeholder="Enter Your Last Name" > {% endcomment %}
-                        {% comment %} </div>
-                  </div>  {% endcomment %}
-
-                  
-
-                  <div class="fields">
-                        <div class="input-fields">
-                            <label for="">Skills <em>*</em></label>
-                                {{ full_user_details_form.skills }} 
-                            {% comment %} <input type="password" placeholder=" Password" > {% endcomment %}
-                        </div>
-                  </div>
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for=""> Recent Job</label>
-                                 {{ full_user_details_form.priveus_job }} 
-                              <!-- <input type="text" placeholder="Enter Your Nationality" > -->
-                        </div>
-                  </div>
-    
-              {% comment %} <div class="fields">
-                  <div class="input-fields">
-                        <label for="">Projects <em>*</em></label>
-                             {{ full_user_details_form.projects }} {% endcomment %}
-                        {% comment %} <input type="text" placeholder=" Confirm Password" > {% endcomment %}
-                  {% comment %} </div>
-             </div> {% endcomment %}
-            <div class="fields">
-                  <div class="input-fields">
-                        <label for="">Specialization <em>*</em></label>
-                             {{ full_user_details_form.specialization }}
-                        {% comment %} <input type="text" name="specialization" placeholder=" Specialization" > {% endcomment %}
-                  </div>
-             </div>
 
             <div class="fields">
-                  <div class="input-fields">
-                      <label for="">Gender  <em> *</em></label>
-                       {{ full_user_details_form.gender}}
-                      {% comment %} <input type="text" placeholder=" Enter Your Gender" > {% endcomment %}
-                  </div>
+                <div class="input-fields">
+                    <label>First Name</label>
+                    {{ user_form.first_name }}
+                    {% for error in user_form.first_name.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
             </div>
- 
-           <div >
-               <label for="" class="cv-file">Profile Image <em>*</em></label>
-               <div  class="file">
-                       {{ full_user_details_form.profile_img}}
 
-                   {% comment %} <input type="file" > {% endcomment %}
-              </div>
-        </div> 
-  
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Last Name</label>
+                    {{ user_form.last_name }}
+                    {% for error in user_form.last_name.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
 
-         
-            {% comment %} <div class="form second"> 
-                <span class="title">Contact Info </span>
-                <div class="details ID"> {% endcomment %}
-                
-                    <div class="fields">
-                          <div class="input-fields">
-                                <label for="">Contact No. <em>*</em></label>
-                                  {{ full_user_details_form.mobile_no }} 
-                                {% comment %} <input type="number" placeholder=" Your Contact No." > {% endcomment %}
-                                <span class="helper-text">(Include your country code too)</span>
-                          </div>
-                       
-                    </div> 
-                   
-           
+            <div class="fields">
+                <div class="input-fields">
+                    <label>User Name</label>
+                    {{ user_form.username }}
+                    {% for error in user_form.username.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
 
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for="">Interests / Hobies <em>*</em></label>
-                                 {{ full_user_details_form.interests}}
-                              {% comment %} <input type="" placeholder=" Your Current Location " > {% endcomment %}
-                        </div>
-                   </div>
-                   <!-- <div class="buttons">
-                        <button class="backBtn">Previous </button>
-                        <button class="nextBtn">Next </button>
-                 </div>
-             -->
-                {% comment %} </div>
-            </div> <br> {% endcomment %}
-            <!-- third -->
-            {% comment %} <div class="form third"> 
-                <span class="title">Education </span>
-                <div class="details ID"> {% endcomment %}
-                
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for="">Education <em>*</em></label>
-                                 {{ full_user_details_form.education}}
-                              {% comment %} <input type="" placeholder=" Your Current Location " > {% endcomment %}
-                        </div>
-                   </div>
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Email</label>
+                    {{ user_form.email }}
+                    {% for error in user_form.email.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
 
-                   <div class="ins-uni-p">
-                    <div class="ins-uni">
-                          <label for=""> About You <em>*</em></label>
-                            {{ full_user_details_form.about_me }} 
-                          {% comment %} <input type="email" placeholder=" Your birth Email " > {% endcomment %}
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Location</label>
+                    {{ profile_form.location }}
+                    {% for error in profile_form.location.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Skills</label>
+                    {{ profile_form.skills }}
+                    {% for error in profile_form.skills.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Recent Job</label>
+                    {{ profile_form.priveus_job }}
+                    {% for error in profile_form.priveus_job.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Specialization <em>*</em></label>
+                    {{ profile_form.specialization }}
+                    {% for error in profile_form.specialization.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label> Gender ></label>
+                    {{ profile_form.gender }}
+                    {% for error in profile_form.gender.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>{{ profile_form.mobile_no.label }}</label>
+                    {{ profile_form.mobile_no }}
+                    <span class="helper-text">{{ profile_form.mobile_no.help_text }}</span>
+                    {% for error in profile_form.mobile_no.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Interests / Hobies </label>
+                    {{ profile_form.interests }}
+                    {% for error in profile_form.interests.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="input-fields">
+                    <label>Education <em>*</em></label>
+                    {{ profile_form.education }}
+                    {% for error in profile_form.education.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="ins-uni">
+                <label>{{ profile_form.about_me.label }}</label>
+                {{ profile_form.about_me }}
+                {% for error in profile_form.about_me.errors %}
+                    <div class="field-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="ins-uni">
+                <label>Institute/University <em>*</em></label>
+                {{ profile_form.university }}
+                {% for error in profile_form.university.errors %}
+                    <div class="field-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="fields">
+                <label class="cv-file">Profile Image</label>
+                <div class="file">
+                    <label class="dropzone" for="{{ profile_form.profile_img.id_for_label }}" id="profile-dropzone">
+                        {% if profile_form.instance.profile_img %}
+                            <img
+                                id="profile-preview"
+                                class="dropzone__preview"
+                                src="{{ profile_form.instance.profile_img.url }}"
+                                alt="Current profile image"
+                                style="display:block;"
+                            >
+                        {% else %}
+                            <img id="profile-preview" class="dropzone__preview" alt="Profile preview">
+                        {% endif %}
+                        <div class="dropzone__title">Drag and drop your photo here</div>
+                        <div class="dropzone__hint">or click to browse JPG, PNG, WEBP</div>
+                    </label>
+                    <div style="display:none;">
+                        {{ profile_form.profile_img }}
                     </div>
-               </div>
-                    <div class="ins-uni-p" >
-                        <div class="ins-uni" >
-                            <label for="">Institute/University <em>*</em></label>
-                                         {{ full_user_details_form.university  }} 
-                             {% comment %} <input type="text" placeholder="Institute or University Name" > {% endcomment %}
-                       </div>
-                    </div> 
-<!-- 
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for="">Specialization <em>*</em></label>
-                             {{ full_user_details_form.spacialization }} 
-                              {% comment %} <input type="text" placeholder="Specialized skill" > {% endcomment %}
-                        </div>
-                  </div> 
+                    {% for error in profile_form.profile_img.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
 
-                    <div class="fields">
-                        <div class="input-fields">
-                              <label for="">Years Completed <em>*</em></label>
-                              <input type="" placeholder="Experienced Years " >
-                        </div>
-                   </div>
-                   <label for="" class="ins-uni">Your Motive</label>
-
-                    <textarea  id="w3review" name="w3review" placeholder="">
-                             
-                    </textarea>
-                    <span class="helper-text">(Introduction,Goals in life and what are you doing to reach your goals.)</span> -->
-                     <div class="buttons">
-                            <button class="nextBtn">UPDATE</button>
-                    </div>
-                {% comment %} </div>
-            </div> {% endcomment %}
+            <div class="buttons">
+                <button type="submit">Update Profile</button>
+            </div>
         </form>
     </div>
-{% endblock  %} 
+</section>
+
+
+<script>
+    (function () {
+        const input = document.getElementById("{{ form.profile_img.id_for_label }}");
+        const dropzone = document.getElementById("profile-dropzone");
+        const preview = document.getElementById("profile-preview");
+
+        if (!input || !dropzone || !preview) return;
+
+        const updatePreview = (file) => {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        };
+
+        input.addEventListener("change", () => {
+            updatePreview(input.files && input.files[0]);
+        });
+
+        dropzone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            dropzone.classList.add("is-dragover");
+        });
+
+        dropzone.addEventListener("dragleave", () => {
+            dropzone.classList.remove("is-dragover");
+        });
+
+        dropzone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropzone.classList.remove("is-dragover");
+            if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+                input.files = event.dataTransfer.files;
+                updatePreview(event.dataTransfer.files[0]);
+            }
+        });
+    })();
+</script>
+{% endblock %}

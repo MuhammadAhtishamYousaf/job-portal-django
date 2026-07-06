@@ -1,51 +1,158 @@
-from urllib import request
-
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required, user_passes_test
 import os
-from pprint import pprint
-# user authentication
-from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.core.handlers.wsgi import WSGIRequest
-# user auth forms
-from django.contrib.auth.forms import UserCreationForm
-from .djangoForms.registration import BuiltinUserCreationForm,BuiltinEmployerCreationForm
-
-# for editing
-from .djangoForms.password_change_form import PasswordCustomChangeForm
-from .djangoForms.password_edit_form import UserChangeCustomForm,FullUserDetailsForm,EmployerChangeCustomForm,FullEmployerDetailsForm
-# user auth model
-from django.contrib.auth.models import User
-
-# flash messages
-from django.contrib import messages
-from django.db import transaction
-
-#  Custom forms
-from .djangoForms.job_posting import JobPostingForm
-
-from .djangoForms.password_edit_form import UserDetailsForm
-
-# Custom Models
-from .models import JobPosting , EmployerDetails ,UserDetails
-
-# for search
-from django.db.models import Q
-# Create your views here.
-
 from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.db import transaction
+from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from .djangoForms.password_change_form import PasswordCustomChangeForm
+from .djangoForms.password_edit_form import (
+    AccountForm,
+    UserDetailsForm,
+    EmployerDetailsForm,
+)
+from .djangoForms.job_posting import JobPostingForm
+from .djangoForms.registration import BuiltinUserCreationForm, BuiltinEmployerCreationForm
+
+from .models import JobPosting, EmployerDetails, UserDetails
+
 
 class CustomPasswordResetView(PasswordResetView):
     html_email_template_name = 'password_reset/password_reset_email.html'
     html_subject_template_name = 'password_reset/password_reset_subject.txt'
     success_url = reverse_lazy('password_reset_done')
 
+def candidate_registration(request: WSGIRequest):
+    if request.method == 'POST':
+        form = BuiltinUserCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                specialization = form.cleaned_data.get('specialization')
+                with transaction.atomic():
+                    user = form.save()
+                    UserDetails.objects.create(specialization=specialization, user=user, type=0)
+                messages.success(request, 'User registered successfully.')
+                return redirect('candidate_login')
+            except Exception:
+                messages.error(request, 'Something went wrong.')
+    else:
+        form = BuiltinUserCreationForm()
 
+    return render(request, 'candidate/registration.html', {'form_data': form})
+
+def candidate_login(request):
+    
+    if request.method == 'GET':
+        return render(request, 'candidate/login.html')
+  
+    username = request.POST.get('username')
+    user_password = request.POST.get('password')
+
+    user = authenticate(request, username=username, password=user_password)
+
+    if user is not None:
+        
+        if user.is_superuser or user.is_staff:
+            login(request, user)
+            messages.success(request, "logged In succesfully!")
+            return redirect(home)
+
+        try:
+            user_details = UserDetails.objects.get(user = user)
+            if user_details.type == 0:
+                login(request, user)
+                messages.success(request, 'Logged In successfully!')
+                return redirect(home)
+            
+            else:
+                messages.error(request, 'You are not registered as an candidate.')
+                return redirect(candidate_login)
+            
+        except UserDetails.DoesNotExist as e:
+            messages.error(request, str(e))
+            return redirect('candidate_login')
+
+        
+    else:
+        messages.error(request, "Username or Password is incorrect")
+        return redirect(candidate_login)
+
+def employer_registration(request):
+    if request.method == 'POST':
+        form = BuiltinEmployerCreationForm(request.POST)
+        
+        if form.is_valid():
+            with transaction.atomic():
+                user = form.save()
+                company = form.cleaned_data.get('company')
+                EmployerDetails.objects.create(employer=user, company=company, type=1)
+            
+            messages.success(request, 'Employer registered successfully.')
+            return redirect('employer_login')
+                
+    else:
+        form = BuiltinEmployerCreationForm()
+        
+    return render(request, 'employer/registration.html', {'form_data': form})
+
+def check_registration_field(request):
+    field = request.GET.get('field')
+    value = request.GET.get('value', '').strip()
+
+    if not field or not value:
+        return JsonResponse({'exists': False})
+
+    if field == 'username':
+        exists = User.objects.filter(username__iexact=value).exists()
+    elif field == 'email':
+        exists = User.objects.filter(email__iexact=value).exists()
+    else:
+        return JsonResponse({'exists': False})
+
+    return JsonResponse({'exists': exists})
+
+def employer_login(request: WSGIRequest):
+    
+    if request.method == 'GET':
+        return render(request, 'employer/login.html')
+    
+    username = request.POST.get('username', '').strip()
+    employer_password = request.POST.get('password', '')
+    
+    employer = authenticate(request, username=username, password=employer_password)
+    
+    if employer is None:
+        messages.error(request, "Username or Password is incorrect")
+        return redirect('employer_login') # Redirect back to the login page regardless of the error
+        
+    if not (employer.is_staff or employer.is_superuser):
+        
+        try:
+            employer_details = EmployerDetails.objects.filter(employer=employer).first()
+        except EmployerDetails.DoesNotExist:
+            messages.error(request, 'Your account is not linked to an employer profile.')
+            return redirect('employer_login')
+        
+        if employer_details.type != 1:
+            messages.error(request, 'You are not registered as an employer.')
+            return redirect('employer_login')
+
+    login(request, employer)
+    messages.success(request, 'Logged In successfully!')
+    return redirect('home')
+
+def user_logout(request):
+    logout(request)
+    messages.success(request,"Logged out successfully!.")
+    return redirect('candidate_login')
 
 def search (request):
     query = request.GET.get('query', '')  # Use .get() to safely retrieve the query
@@ -67,20 +174,27 @@ def search (request):
         'error_message': error_message,
     })
 
+
+
+
 def swiper (request):
     return render (request,'swiper.html')
 
 def home(request):
-    # return HttpResponse( 'working')
-    job_posting=JobPosting.objects.all()
-    
     if request.user.is_authenticated:
-        return  render(request , 'main.html', {'jobs': job_posting})
+        return  render(request , 'main.html')
     
     else:
-        
         messages.error(request,'Kindley login first!')
         return redirect(candidate_login)
+
+def companies(request):
+    return render(request, 'companies.html')
+
+
+def jobs(request):
+    job_postings = JobPosting.objects.all()
+    return render(request, 'jobs.html', {'jobs': job_postings})
  
 def Navbar(request):
     user = User.objects.get(id=request.user.id)
@@ -98,21 +212,18 @@ def AdminPanel (request):
 def swiper (request):
     return render (request,'swiper.html')
 
-def profile_page(request, id):
-    # Try to retrieve the user
-    user = User.objects.get(id=id)
-    try:
-        user_details = UserDetails.objects.filter(user=user)
-        if user_details.exists():
-        # return HttpResponse (user_details)
-           return render(request, 'Candidate/candidate_profile_page.html', { 'user_details': user_details})
-        else:
-             employer_details = EmployerDetails.objects.filter(employer=user)
-            # return HttpResponse (employer_details)
-             return render(request, 'Employer/employer_profile_page.html', { 'employer_details': employer_details})
-    except UserDetails or EmployerDetails.DoesNotExist:
-        # If neither UserDetails nor EmployerDetails found, return a response indicating so
-          return HttpResponse('User Details Does not Exist!')
+@login_required
+def profile_page(request: WSGIRequest):
+    user = request.user
+    user_details = UserDetails.objects.filter(user=user).first()
+    if user_details:
+        return render(request, 'candidate/candidate_profile_page.html', {'user_details': user_details})
+
+    employer_details = EmployerDetails.objects.filter(employer=user).first()
+    if employer_details:
+        return render(request, 'employer/employer_profile_page.html', {'employer_details': employer_details})
+
+    return HttpResponse('User Details Does not Exist!')
     
 # def candidate_registration (request):
     # if request.method == 'GET':
@@ -162,67 +273,6 @@ def profile_page(request, id):
     #         return  HttpResponse (form.errors)
     
     
-def candidate_registration(request: WSGIRequest):
-    if request.method == 'POST':
-        form = BuiltinUserCreationForm(request.POST)
-        if form.is_valid():
-            try:
-                specialization = form.cleaned_data.get('specialization')
-                with transaction.atomic():
-                    user = form.save()
-                    UserDetails.objects.create(specialization=specialization, user=user, type=0)
-                messages.success(request, 'User registered successfully.')
-                return redirect('candidate_login')
-            except Exception:
-                messages.error(request, 'Something went wrong.')
-    else:
-        form = BuiltinUserCreationForm()
-
-    return render(request, 'candidate/registration.html', {'form_data': form})
-
-def candidate_login(request):
-    
-    if request.method == 'GET':
-        return render(request, 'candidate/login.html')
-  
-    username = request.POST.get('username')
-    user_password = request.POST.get('password')
-
-    user = authenticate(request, username=username, password=user_password)
-
-    if user is not None:
-        
-        if user.is_superuser or user.is_staff:
-            login(request, user)
-            messages.success(request, "logged In succesfully!")
-            return redirect(home)
-
-        try:
-            user_details = UserDetails.objects.get(user = user)
-            if user_details.type == 0:
-                login(request, user)
-                messages.success(request, 'Logged In successfull!')
-                return redirect(home)
-            
-            else:
-                messages.error(request, 'You are not registered as an candidate.')
-                return redirect(candidate_login)
-            
-        except UserDetails.DoesNotExist as e:
-            messages.error(request, str(e))
-            return redirect('candidate_login')
-
-        
-    else:
-        messages.error(request, "Username or Password is incorrect")
-        return redirect(candidate_login)
-        # return HttpResponse(user)
-    # return HttpResponse(request.POST)
-
-def candidate_logout(request):
-    logout(request)
-    messages.success(request,"Logged out successfully!.")
-    return redirect('candidate_login')
 
 def candidates (request):
     # users = User.objects.all()
@@ -230,17 +280,7 @@ def candidates (request):
     #    return HttpResponse (users)
     return render(request, 'candidate/candidates.html',{'user_details':user_details})
 
-def candidate_profile_page (request,id):
-    #  user=User.objects.get(id=id)
-     try:  
-        user_details = UserDetails.objects.filter(id=id)
-        # user_details = UserDetails.objects.get(user_details=user_details)      
-        return render (request,'candidate/candidate_profile_page.html',{'user_details':user_details})
 
-     except:
-        
-    #     return HttpResponse ('except')
-        return HttpResponse (user_details)
 
 def myprofile (request):
     # Get the currently logged-in user
@@ -249,71 +289,6 @@ def myprofile (request):
     return render(request, 'candidate/myprofile.html', {'user': user})
  
  
-
-def employer_registration(request):
-    if request.method == 'POST':
-        form = BuiltinEmployerCreationForm(request.POST)
-        
-        if form.is_valid():
-            with transaction.atomic():
-                user = form.save()
-                company = form.cleaned_data.get('company')
-                EmployerDetails.objects.create(employer=user, company=company, type=1)
-            
-            messages.success(request, 'Employer registered successfully.')
-            return redirect('employer_login')
-                
-    else:
-        form = BuiltinEmployerCreationForm()
-        
-    return render(request, 'employer/registration.html', {'form_data': form})
-
-
-def check_registration_field(request):
-    field = request.GET.get('field')
-    value = request.GET.get('value', '').strip()
-
-    if not field or not value:
-        return JsonResponse({'exists': False})
-
-    if field == 'username':
-        exists = User.objects.filter(username__iexact=value).exists()
-    elif field == 'email':
-        exists = User.objects.filter(email__iexact=value).exists()
-    else:
-        return JsonResponse({'exists': False})
-
-    return JsonResponse({'exists': exists})
-
-def employer_login(request: WSGIRequest):
-    
-    if request.method == 'GET':
-        return render(request, 'employer/login.html')
-    
-    username = request.POST.get('username', '').strip()
-    employer_password = request.POST.get('password', '')
-    
-    employer = authenticate(request, username=username, password=employer_password)
-    
-    if employer is None:
-        messages.error(request, "Username or Password is incorrect")
-        return redirect('employer_login') # Redirect back to the login page regardless of the error
-        
-    if not (employer.is_staff or employer.is_superuser):
-        
-        try:
-            employer_details = EmployerDetails.objects.filter(employer=employer).first()
-        except EmployerDetails.DoesNotExist:
-            messages.error(request, 'Your account is not linked to an employer profile.')
-            return redirect('employer_login')
-        
-        if employer_details.type != 1:
-            messages.error(request, 'You are not registered as an employer.')
-            return redirect('employer_login')
-
-    login(request, employer)
-    messages.success(request, 'Logged In successfully!')
-    return redirect('home')
 
 
 
@@ -378,17 +353,6 @@ def employers (request):
      employer_details=EmployerDetails.objects.all()
      return render (request, 'Employer/employers.html',{'employer_details':employer_details})
 
-def employer_profile_page (request,id):
-    
-     try:  
-        employer_details = EmployerDetails.objects.filter(id=id)
-        # user_details = UserDetails.objects.get(user_details=user_details)      
-        return render (request,'Employer/employer_profile_page.html',{'employer_details':employer_details})
-
-     except:
-        
-    #     return HttpResponse ('except')
-        return HttpResponse (employer_details)
      
 def employer_dashboard (request):
     employers = User.objects.all ()
@@ -402,9 +366,10 @@ def delete_user(request,id):
 
 def user_edit(request, id):
     try:
-        user = User.objects.get(id=id)
-        user_details = UserDetails.objects.filter(user=user)
-        employer_details = EmployerDetails.objects.filter(employer=user)
+        # user = User.objects.get(id=id)
+        user = User.objects.filter(id=id).first()
+        user_details = UserDetails.objects.filter(user=user).first()
+        employer_details = EmployerDetails.objects.filter(employer=user).first()
 
         if employer_details:  # User is an employer
             if request.method == 'POST':
@@ -445,19 +410,108 @@ def Employer_details(request):
    employer_details=EmployerDetails.objects.all()
    return render (request,'ForAdmin/EmployerDetails.html',{'employer_details':employer_details})
  
+
+@login_required
+def profile(request: WSGIRequest):
+    """
+    Decide which profile edit page the logged-in user should see.
+    """
+
+    if UserDetails.objects.filter(user=request.user).exists():
+        return redirect("candidate_profile_edit")
+
+    if EmployerDetails.objects.filter(employer=request.user).exists():
+        return redirect("employer_profile_edit")
+
+    messages.error(request, "Profile not found.")
+    return redirect("home")
+
+@login_required
+def candidate_profile_edit(request: WSGIRequest):
+    
+    user = request.user
+    user_details = get_object_or_404(UserDetails, user=user)
+
+    if request.method == "POST":
+        
+        user_form = AccountForm(request.POST, instance=user)
+
+        profile_form = UserDetailsForm(
+            request.POST,
+            request.FILES,
+            instance=user_details,
+        )
+
+        if (user_form.is_valid() and profile_form.is_valid()):
+            with transaction.atomic():
+                user_form.save()
+                profile_form.save()
+            
+            messages.success(request, "Profile updated successfully.")
+            return redirect("profile_page")
+    else:
+
+        user_form = AccountForm(
+            instance=user
+        )
+
+        profile_form = UserDetailsForm(
+            instance=user_details
+        )
+
+    return render(
+        request,
+        "candidate/user_details_edit.html",
+        {
+            "user_form": user_form,
+            "profile_form": profile_form,
+        },
+    )
+
+@login_required
+def employer_profile_edit(request):
+    employer_details = get_object_or_404(
+        EmployerDetails,
+        employer=request.user,
+    )
+
+    if request.method == "POST":
+        form = EmployerDetailsForm(
+            request.POST,
+            request.FILES,
+            instance=employer_details,
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully.")
+            return redirect("profile_page", id = request.user.id)
+    else:
+        form = EmployerDetailsForm(instance=employer_details)
+
+    return render(
+        request,
+        "employer/employer_details_edit.html",
+        {
+            "full_employer_details_form": form,
+            "user_id": request.user.id
+        },
+    )
+    
+    
 def user_details_edit(request, id):
     # Retrieve the user based on the id
     user = User.objects.get(id=id)
 
-    try:
+    try:    
         # Check if the user is an employer or a candidate
         employer_details = EmployerDetails.objects.get(employer=user)
 
         if employer_details.type == 1:  # If the user is an employer
             if request.method == 'GET':
                 # Pass the EmployerDetails instance to the form if it exists
-                full_employer_details_form = FullEmployerDetailsForm(instance=employer_details)
-                return render(request, 'Employer/employer_details_edit.html', {
+                full_employer_details_form = EmployerDetailsForm(instance=employer_details)
+                return render(request, 'employer/employer_details_edit.html', {
                     'full_employer_details_form': full_employer_details_form,
                     'user_id': id
                 })
@@ -465,7 +519,7 @@ def user_details_edit(request, id):
                 company = request.POST.get('company')  # Use get to avoid KeyError
                 
                 # Pass the instance and additional data to the form
-                full_employer_details_form = FullEmployerDetailsForm(request.POST, instance=employer_details)
+                full_employer_details_form = EmployerDetailsForm(request.POST, instance=employer_details)
 
                 if full_employer_details_form.is_valid() and company:
                     full_employer_details_instance = full_employer_details_form.save(commit=False)
@@ -487,10 +541,10 @@ def user_details_edit(request, id):
             
             if request.method == 'GET':
                 # Pass the UserDetails instance to the form if it exists
-                full_user_details_form = FullUserDetailsForm(instance=user_details)
-                return render(request, 'Candidate/user_details_edit.html', {
-                    'full_user_details_form': full_user_details_form,
-                    'user_id': id
+                full_user_details_form = UserDetailsForm(instance=user_details)
+                return render(request, 'candidate/user_details_edit.html', {
+                    'form': full_user_details_form,
+                    'user_id': id                                                                                                                       
                 })
             elif request.method == 'POST':
                 specialization = request.POST.get('specialization')  # Use get to avoid KeyError
@@ -502,7 +556,7 @@ def user_details_edit(request, id):
                     user_details.profile_img = request.FILES['profile_img']
                    
                 # Pass the instance and additional data to the form
-                full_user_details_form = FullUserDetailsForm(request.POST,request.FILES, instance=user_details)
+                full_user_details_form = UserDetailsForm(request.POST,request.FILES, instance=user_details)
                 full_user_details_form.type=0
                 full_user_details_form.user=request.user
 
@@ -516,7 +570,7 @@ def user_details_edit(request, id):
                 else:
                     messages.error(request, 'Invalid information')
                     # Redirect back to the edit page with the current user id
-                    return HttpResponse(full_user_details_form.errors)
+                    # return HttpResponse(full_user_details_form.errors)
                     return redirect('user_details_edit',id)
 
         except UserDetails.DoesNotExist:

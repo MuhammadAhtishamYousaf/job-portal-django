@@ -1,95 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Job Listings</title>
-<style>
-    body {
-        font-family: sans-serif;
-        font-weight: lighter;
-        margin: 0;
-        padding: 0;
-    }
-      .container {
-   
- margin-top: 40px;
- width: 100%;
-  display: flex;
-  height: 100%;
-  position: relative;
- background-color: #333;
-  justify-content:center ;
-  align-items: center;
-  flex-wrap: wrap;
-} 
-    
-    .job-listing {
-        height:100%;
-        min-height: 150px;
-        max-width: 400px;
-        min-width:250px;
-        width: 100%;
-        border: 1px solid #ccc;
-        margin: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        /* background-color: #f9f9f9; */
-        background-color: #333;
-        color:white;
-    }
-    
-    .job-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        /* color: #333; */
-        margin-bottom: 5px;
-    }
-    
-    .job-description {
-        /* color: #666; */
-        margin-bottom: 5px;
-    }
-    
-    .job-location {
-        /* color: #999; */
-    }
-    .container a {
-        text-decoration: none;
+{% extends 'base.html' %}
+{% load static %}
 
-    }
-</style>
-</head>
-<body>
-     <div class="container">
-        {% for jobs in jobs %} 
-    <a href=""><div class="job-listing">
-            <div class="job-title">{{ jobs.job_title}}</div>
-            <div class="job-description">
-                {{jobs.job_description}}
-                {% comment %} We are looking for a skilled software engineer to join our team. The ideal candidate should have experience in web development and proficiency in HTML, CSS, and JavaScript. {% endcomment %}
+{% block 'title' %}Jobs{% endblock %}
+
+{% block 'style' %}
+    <link rel="stylesheet" href="{% static 'css/jobs.css' %}">
+{% endblock %}
+
+{% block 'content' %}
+<section class="jobs-hero" id="jobs-home">
+    <div class="jobs-hero-copy">
+        <p class="jobs-kicker">Browse opportunities</p>
+        <h1>Find the right role faster</h1>
+        <p class="jobs-summary">
+            Search live openings, narrow the list by what matters, and jump into a role that fits your skills.
+        </p>
+    </div>
+
+    <div class="search-wrapper">
+        <form class="search-box" method="get" action="{% url 'search' %}">
+            <input type="search" id="search" name="query" autocomplete="off" class="search-input" placeholder="Find your dream job">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+        <div class="result-box"></div>
+    </div>
+
+    <div class="filter-box">
+        <div class="filter-dropdown">
+            <select name="job-level1" id="job-level" class="filter-select">
+                <option value="">Job Level</option>
+                <option value="">Entry</option>
+                <option value="">Mid-Senior</option>
+                <option value="">Director</option>
+            </select>
+            <select name="job-function" id="job-function" class="filter-select">
+                <option value="">Job Function</option>
+                <option value="">IT</option>
+                <option value="">Management</option>
+                <option value="">Education</option>
+            </select>
+            <select name="employment" id="employment" class="filter-select">
+                <option value="">Employment Type</option>
+                <option value="">Internship</option>
+                <option value="">Part Time</option>
+                <option value="">Full Time</option>
+            </select>
+            <select name="location" id="location" class="filter-select">
+                <option value="">Location</option>
+                <option value="">Remote</option>
+                <option value="">Pakistan</option>
+                <option value="">Other</option>
+            </select>
+            <select name="education" id="education" class="filter-select">
+                <option value="">Education</option>
+                <option value="">UnderGraduate</option>
+                <option value="">Graduate</option>
+                <option value="">Master's</option>
+            </select>
+        </div>
+        <div class="filter-chosen"></div>
+    </div>
+</section>
+
+<section class="job-list ani" id="job-list">
+    {% for job in jobs %}
+        <div class="job-card">
+            <div class="job-name">
+                <img class="job-profile" src="https://www.designevo.com/res/templates/thumb_small/white-and-yellow-crown.webp" alt="">
+                <div class="job-detail">
+                    <p>{{ job.job_title }}</p>
+                    <p>{{ job.job_location }}</p>
+                    <p>{{ job.job_description }}</p>
+                </div>
             </div>
-            <div class="job-location"> <strong> Location</strong>: {{jobs.job_location}}</div>
-         </div>
-    </a>
-{% endfor %}
+            <div class="job-label">
+                <a href="#" class="label-a"><strong>Salary:</strong>{{ job.salary }}</a>
+                <a href="#" class="label-b"><strong>Industry:</strong>{{ job.industry }}</a>
+                <a href="#" class="label-c"><strong>Experience:</strong>{{ job.experience_required }}</a>
+            </div>
+            <div class="job-posted">{{ job.posting_date }}</div>
+        </div>
+    {% empty %}
+        <div class="jobs-empty">No jobs available right now.</div>
+    {% endfor %}
 
-   <!-- <a href=""> <div class="job-listing">
-        <div class="job-title">Data Analyst</div>
-        <div class="job-description">
-            We are seeking a detail-oriented data analyst to analyze large datasets and provide insights to drive business decisions.
-        </div>
-        <div class="job-location"> <strong> Location</strong>: San Francisco, CA</div>
-    </div></a>
-    
-   <a href=""> <div class="job-listing">
-        <div class="job-title">Data Analyst</div>
-        <div class="job-description">
-            We are seeking a detail-oriented data analyst to analyze large datasets and provide insights to drive business decisions.
-        </div>
-        <div class="job-location">Location: San Francisco, CA</div>
-    </div></a> -->
-</div>
-  
-</body>
-</html>
+    <a href="{% url 'full_job_profile' %}"><button class="job-more" type="button">More Lists</button></a>
+</section>
+
+<script src="{% static 'js/jobs.js' %}"></script>
+{% endblock %}
