@@ -365,42 +365,43 @@ def delete_user(request,id):
     return redirect('dashboard')
 
 def user_edit(request, id):
-    try:
-        # user = User.objects.get(id=id)
-        user = User.objects.filter(id=id).first()
-        user_details = UserDetails.objects.filter(user=user).first()
-        employer_details = EmployerDetails.objects.filter(employer=user).first()
+    pass
+    # try:
+    #     # user = User.objects.get(id=id)
+    #     user = User.objects.filter(id=id).first()
+    #     user_details = UserDetails.objects.filter(user=user).first()
+    #     employer_details = EmployerDetails.objects.filter(employer=user).first()
 
-        if employer_details:  # User is an employer
-            if request.method == 'POST':
-                form = EmployerChangeCustomForm(request.POST, instance=user)
-                if form.is_valid():
-                    form.save()
-                    messages.success(request, 'Employer details updated successfully!')
-                    return redirect('user_details_edit',id)
-                else:
-                    messages.error(request, 'Invalid data')
-                    return redirect('user_edit', id)
-            else:
-                form = EmployerChangeCustomForm(instance=user)
-                return render(request, 'Employer/employer_edit.html', {'form_data': form, 'user_id': id})
-        else:  # User is a candidate
-            if request.method == 'POST':
-                form = UserChangeCustomForm(request.POST, instance=user)
-                if form.is_valid():
-                    form.save()
-                    messages.success(request, 'User details updated successfully!')
-                    return redirect('user_details_edit',id)
-                else:
-                    messages.error(request, 'Invalid data')
-                    return redirect('user_edit', id=id)
-            else:
-                form = UserChangeCustomForm(instance=user)
-                return render(request, 'Candidate/user_edit.html', {'form_data': form, 'user_id': id})
+    #     if employer_details:  # User is an employer
+    #         if request.method == 'POST':
+    #             form = EmployerChangeCustomForm(request.POST, instance=user)
+    #             if form.is_valid():
+    #                 form.save()
+    #                 messages.success(request, 'Employer details updated successfully!')
+    #                 return redirect('user_details_edit',id)
+    #             else:
+    #                 messages.error(request, 'Invalid data')
+    #                 return redirect('user_edit', id)
+    #         else:
+    #             form = EmployerChangeCustomForm(instance=user)
+    #             return render(request, 'Employer/employer_edit.html', {'form_data': form, 'user_id': id})
+    #     else:  # User is a candidate
+    #         if request.method == 'POST':
+    #             form = UserChangeCustomForm(request.POST, instance=user)
+    #             if form.is_valid():
+    #                 form.save()
+    #                 messages.success(request, 'User details updated successfully!')
+    #                 return redirect('user_details_edit',id)
+    #             else:
+    #                 messages.error(request, 'Invalid data')
+    #                 return redirect('user_edit', id=id)
+    #         else:
+    #             form = UserChangeCustomForm(instance=user)
+    #             return render(request, 'Candidate/user_edit.html', {'form_data': form, 'user_id': id})
 
-    except UserDetails.DoesNotExist:
-        messages.error(request, 'No User Details Found!')
-        return redirect('home')
+    # except UserDetails.DoesNotExist:
+    #     messages.error(request, 'No User Details Found!')
+    #     return redirect('home')
 
 def Candidate_details(request):
    user_details=UserDetails.objects.all()
